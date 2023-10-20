@@ -28,3 +28,6 @@ boxplot(licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "control"], licor_A_Ci$avg.A
         names = c("Control trees", "Cooled trees"),
         ylab = "A/Ci")
 dev.off()
+t.test(licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "cooled"],
+       licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "control"],
+       alternative = "greater")
