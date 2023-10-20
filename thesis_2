@@ -1,0 +1,30 @@
+licor <- read.csv("dati/licor_data_1.CSV", sep = ";", header = TRUE)
+View(licor)
+str(licor)
+licor$A <- as.integer(licor$A)
+suppressWarnings(licor$A <- as.numeric(licor$A))
+licor$A
+summary(licor)
+
+licor_BC <- read.csv("dati/licor_data_BC.CSV", sep = ";", header = TRUE)
+View(licor_BC)
+licor_BQ <- read.csv("dati/licor_data_BQ.CSV", sep = ";", header = TRUE)
+View(licor_BQ)
+boxplot(licor_BC$avg.A.Ci, licor_BQ$avg.A.Ci,
+        names = c("Control trees", "Cooled trees"),
+        main = "A/Ci")
+
+licor_A_Ci <- read.csv("dati/licor_data_A-Ci.CSV", sep = ";", header = TRUE)
+View(licor_A_Ci)
+
+licor_A_Ci$treatment <- factor(licor_A_Ci$treatment)
+str(licor_A_Ci)
+
+licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "cooled"]
+licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "control"]
+
+png("outputs/licor_A_Ci.png", width = 1500, height = 1000, res = 300)
+boxplot(licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "control"], licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "cooled"],
+        names = c("Control trees", "Cooled trees"),
+        ylab = "A/Ci")
+dev.off()
