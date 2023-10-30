@@ -54,9 +54,71 @@ licor_1$A/licor_1$Ci
 licor_1$A.Ci <- licor_1$A/licor_1$Ci
 
 #calculating the mean for A
-group_mean<- aggregate(x= licor_1$A,
+# group_mean<- aggregate(x= licor_1$A,
                        by = list(licor_1$X),
                        FUN = mean)
-print(group_mean)
+# print(group_mean)
 
-licor_1$group_mean_A <- group_mean
+# licor_1$group_mean_A <- group_mean
+
+licor_1_new <- licor_1
+View(licor_1_new)
+
+# calculating mean for A
+licor_1$mean_A <- ave(licor_1$A, licor_1$X)
+
+boxplot(licor_1$mean_A[licor_1$treatment == "control"], licor_1$mean_A[licor_1$treatment == "cooling"], licor_1$mean_A[licor_1$treatment == "cooled"],
+        names = c("Control trees", "Cooling trees", "Cooled trees"),
+        ylab = "A")
+
+t.test(licor_1$mean_A[licor_1$treatment == "cooled"],
+       licor_1$mean_A[licor_1$treatment == "control"],
+       alternative = "greater")
+
+#calculating mean for A/Ci
+licor_1$mean_A.Ci <- ave(licor_1$A.Ci, licor_1$X)
+
+boxplot(licor_1$mean_A.Ci[licor_1$treatment == "control"], licor_1$mean_A.Ci[licor_1$treatment == "cooling"], licor_1$mean_A.Ci[licor_1$treatment == "cooled"],
+        names = c("Control trees", "Cooling trees", "Cooled trees"),
+        ylab = "A/Ci")
+
+t.test(licor_1$mean_A.Ci[licor_1_new$treatment == "cooled"],
+       licor_1$mean_A.Ci[licor_1_new$treatment == "control"],
+       alternative = "greater")
+
+#mean for E
+licor_1$mean_E <- ave(licor_1$E, licor_1$X)
+
+boxplot(licor_1$mean_E[licor_1$treatment == "control"], licor_1$mean_E[licor_1$treatment == "cooling"], licor_1$mean_E[licor_1$treatment == "cooled"],
+        names = c("Control trees", "Cooling trees", "Cooled trees"),
+        ylab = "E")
+
+t.test(licor_1$mean_E[licor_1_new$treatment == "cooled"],
+       licor_1$mean_E[licor_1_new$treatment == "control"],
+       alternative = "greater")
+
+#mean for gsw
+licor_1$mean_gsw <- ave(licor_1$gsw, licor_1$X)
+
+boxplot(licor_1$mean_gsw[licor_1$treatment == "control"], licor_1$mean_gsw[licor_1$treatment == "cooling"], licor_1$mean_gsw[licor_1$treatment == "cooled"],
+        names = c("Control trees", "Cooling trees", "Cooled trees"),
+        ylab = "gsw")
+
+t.test(licor_1$mean_gsw[licor_1_new$treatment == "cooled"],
+       licor_1$mean_gsw[licor_1_new$treatment == "control"],
+       alternative = "greater")
+
+#mean for Ci
+
+licor_1$mean_Ci <- ave(licor_1$Ci, licor_1$X)
+
+boxplot(licor_1$mean_Ci[licor_1$treatment == "control"], licor_1$mean_Ci[licor_1$treatment == "cooling"], licor_1$mean_Ci[licor_1$treatment == "cooled"],
+        names = c("Control trees", "Cooling trees", "Cooled trees"),
+        ylab = "Ci")
+
+t.test(licor_1$mean_Ci[licor_1_new$treatment == "cooled"],
+       licor_1$mean_Ci[licor_1_new$treatment == "control"],
+       alternative = "greater")
+
+
+
