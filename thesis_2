@@ -57,7 +57,7 @@ licor_1$A.Ci <- licor_1$A/licor_1$Ci
 # group_mean<- aggregate(x= licor_1$A,
                        by = list(licor_1$X),
                        FUN = mean)
-# print(group_mean)
+#print(group_mean)
 
 # licor_1$group_mean_A <- group_mean
 
