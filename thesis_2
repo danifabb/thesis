@@ -31,3 +31,32 @@ dev.off()
 t.test(licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "cooled"],
        licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "control"],
        alternative = "greater")
+
+
+licor_1 <- read.csv("dati/tabella_definitiva.csv", sep = ";", header = TRUE, dec =",")
+View(licor_1)
+
+?read.csv
+
+getwd()
+
+licor_1$treatment <- factor(licor_1$treatment) 
+str(licor_1$treatment)
+
+# putting treatment column in order
+install.packages("dplyr")
+library(dplyr)
+licor_1 <- licor_1[order(licor_1$treatment), ]
+licor_1 <- order(licor_1$treatment) 
+
+# A/Ci column 
+licor_1$A/licor_1$Ci
+licor_1$A.Ci <- licor_1$A/licor_1$Ci
+
+#calculating the mean for A
+group_mean<- aggregate(x= licor_1$A,
+                       by = list(licor_1$X),
+                       FUN = mean)
+print(group_mean)
+
+licor_1$group_mean_A <- group_mean
