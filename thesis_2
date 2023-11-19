@@ -32,7 +32,7 @@ t.test(licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "cooled"],
        licor_A_Ci$avg.A.Ci[licor_A_Ci$treatment == "control"],
        alternative = "greater")
 
-
+# codice buono da qui
 licor_1 <- read.csv("dati/tabella_definitiva.csv", sep = ";", header = TRUE, dec =",")
 View(licor_1)
 
@@ -52,6 +52,10 @@ licor_1 <- order(licor_1$treatment)
 # A/Ci column 
 licor_1$A/licor_1$Ci
 licor_1$A.Ci <- licor_1$A/licor_1$Ci
+
+# let's remove outliers
+licor_2 <- subset(licor_1, licor_1$comment != "outlier")
+View(licor_2)
 
 #calculating the mean for A
 # group_mean<- aggregate(x= licor_1$A,
@@ -127,6 +131,31 @@ dev.off()
 t.test(licor_1$mean_A.Ci[licor_1$treatment == "cooled"],
        licor_1$mean_A.Ci[licor_1$treatment == "control"],
        alternative = "greater")
+
+#ANOVA
+aov_E <- aov(licor_2$mean_E ~ licor_2$batch + licor_2$treatment)
+summary(aov_E) # treatment is significant
+
+aov_A <- aov(licor_2$mean_A ~ licor_2$batch + licor_2$treatment)
+summary(aov_A) #both are significant
+
+aov_gsw <- aov(licor_2$mean_gsw ~ licor_2$batch + licor_2$treatment)
+summary(aov_gsw) #treatment is significant
+
+aov_A.Ci <- aov(licor_2$mean_A.Ci ~ licor_2$batch + licor_2$treatment)
+summary(aov_A.Ci) #both significant
+
+#how can i visualize?
+
+#is the distribution normal?
+plot(aov_E) #why is residuals vs fitted not showing up
+resid(aov_E)
+
+plot(aov_A) #here i have r vs f and nice-looking normal Q-Q plot
+
+plot(aov_gsw) #wierd r vs f
+
+plot(aov_A.Ci)
 
 
 
