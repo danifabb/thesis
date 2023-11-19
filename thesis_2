@@ -65,71 +65,68 @@ View(licor_2)
 
 # licor_1$group_mean_A <- group_mean
 
-licor_1_new <- licor_1
-View(licor_1_new)
-
 #mean for E
-licor_1$mean_E <- ave(licor_1$E, licor_1$X)
+licor_2$mean_E <- ave(licor_2$E, licor_2$X)
 
 png("outputs/E.png", width = 1500, height = 1000, res = 300)
-boxplot(licor_1$mean_E[licor_1$treatment == "control"], licor_1$mean_E[licor_1$treatment == "cooling"], licor_1$mean_E[licor_1$treatment == "cooled"],
+boxplot(licor_2$mean_E[licor_2$treatment == "control"], licor_2$mean_E[licor_2$treatment == "cooling"], licor_2$mean_E[licor_2$treatment == "cooled"],
         names = c("Control trees", "Cooling trees", "Cooled trees"),
         ylab = "E")
 dev.off()
 
-t.test(licor_1$mean_E[licor_1$treatment == "cooled"],
-       licor_1$mean_E[licor_1$treatment == "control"],
+t.test(licor_2$mean_E[licor_2$treatment == "cooled"],
+       licor_2$mean_E[licor_2$treatment == "control"],
        alternative = "greater")
 
 # calculating mean for A
-licor_1$mean_A <- ave(licor_1$A, licor_1$X)
+licor_2$mean_A <- ave(licor_2$A, licor_2$X)
 
 png("outputs/A.png", width = 1500, height = 1000, res = 300)
-boxplot(licor_1$mean_A[licor_1$treatment == "control"], licor_1$mean_A[licor_1$treatment == "cooling"], licor_1$mean_A[licor_1$treatment == "cooled"],
+boxplot(licor_2$mean_A[licor_2$treatment == "control"], licor_2$mean_A[licor_2$treatment == "cooling"], licor_2$mean_A[licor_2$treatment == "cooled"],
         names = c("Control trees", "Cooling trees", "Cooled trees"),
         ylab = "A")
 dev.off()
 
-t.test(licor_1$mean_A[licor_1$treatment == "cooled"],
-       licor_1$mean_A[licor_1$treatment == "control"],
+t.test(licor_2$mean_A[licor_2$treatment == "cooled"],
+       licor_2$mean_A[licor_2$treatment == "control"],
        alternative = "greater")
 
 #mean for Ci
-licor_1$mean_Ci <- ave(licor_1$Ci, licor_1$X)
+licor_2$mean_Ci <- ave(licor_2$Ci, licor_2$X)
 
-boxplot(licor_1$mean_Ci[licor_1$treatment == "control"], licor_1$mean_Ci[licor_1$treatment == "cooling"], licor_1$mean_Ci[licor_1$treatment == "cooled"],
+boxplot(licor_2$mean_Ci[licor_2$treatment == "control"], licor_2$mean_Ci[licor_2$treatment == "cooling"], licor_2$mean_Ci[licor_2$treatment == "cooled"],
         names = c("Control trees", "Cooling trees", "Cooled trees"),
         ylab = "Ci")
 
-t.test(licor_1$mean_Ci[licor_1$treatment == "cooled"],
-       licor_1$mean_Ci[licor_1$treatment == "control"],
+t.test(licor_2$mean_Ci[licor_2$treatment == "cooled"],
+       licor_2$mean_Ci[licor_2$treatment == "control"],
        alternative = "greater")
 
 #mean for gsw
-licor_1$mean_gsw <- ave(licor_1$gsw, licor_1$X)
+licor_2$mean_gsw <- ave(licor_2$gsw, licor_2$X)
 
 png("outputs/gsw.png", width = 1500, height = 1000, res = 300)
-boxplot(licor_1$mean_gsw[licor_1$treatment == "control"], licor_1$mean_gsw[licor_1$treatment == "cooling"], licor_1$mean_gsw[licor_1$treatment == "cooled"],
+boxplot(licor_2$mean_gsw[licor_2$treatment == "control"], licor_2$mean_gsw[licor_2$treatment == "cooling"], licor_2$mean_gsw[licor_2$treatment == "cooled"],
         names = c("Control trees", "Cooling trees", "Cooled trees"),
         ylab = "gsw")
 dev.off()
 
-t.test(licor_1$mean_gsw[licor_1$treatment == "cooled"],
-       licor_1$mean_gsw[licor_1$treatment == "control"],
+t.test(licor_2$mean_gsw[licor_2$treatment == "cooled"],
+       licor_2$mean_gsw[licor_2$treatment == "control"],
        alternative = "greater")
 
 
 #calculating mean for A/Ci
-licor_1$mean_A.Ci <- ave(licor_1$A.Ci, licor_1$X)
+licor_2$mean_A.Ci <- ave(licor_2$A.Ci, licor_2$X)
 
 png("outputs/A.Ci.png", width = 1500, height = 1000, res = 300)
-boxplot(licor_1$mean_A.Ci[licor_1$treatment == "control"], licor_1$mean_A.Ci[licor_1$treatment == "cooling"], licor_1$mean_A.Ci[licor_1$treatment == "cooled"],
+boxplot(licor_2$mean_A.Ci[licor_2$treatment == "control"], licor_2$mean_A.Ci[licor_2$treatment == "cooling"], licor_2$mean_A.Ci[licor_2$treatment == "cooled"],
         names = c("Control trees", "Cooling trees", "Cooled trees"),
         ylab = "A/Ci")
 dev.off()
 
-t.test(licor_1$mean_A.Ci[licor_1$treatment == "cooled"],
-       licor_1$mean_A.Ci[licor_1$treatment == "control"],
+t.test(licor_2$mean_A.Ci[licor_2$treatment == "cooled"],
+       licor_2$mean_A.Ci[licor_2$treatment == "control"],
        alternative = "greater")
 
 #ANOVA
