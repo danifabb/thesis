@@ -1,0 +1,178 @@
+licor_1 <- read.csv("dati/final_version_with_comment_1.csv", sep = ";", header = TRUE, dec =",")
+View(licor_1)
+
+#getwd()
+
+licor_1$treatment <- factor(licor_1$treatment) 
+str(licor_1$treatment)
+
+# putting treatment column in order
+#install.packages("dplyr")
+#library(dplyr)
+#licor_1 <- licor_1[order(licor_1$treatment), ]
+#licor_1 <- order(licor_1$treatment) 
+
+# A/Ci column 
+licor_1$A.Ci <- licor_1$A/licor_1$Ci
+
+# let's remove outliers
+licor_2 <- subset(licor_1, licor_1$comment != "outlier")
+View(licor_2)
+
+
+#calculating average of the three values per leaf
+library(dplyr)
+
+licor_avg_1 <- licor_2%>%
+  group_by(X, date, tree.id, batch, treatment, replicate, Y)%>%
+  dplyr::summarise(avg.E_1=mean(E), avg.A_1=mean(A), avg.Ca_1=mean(Ca), avg.Ci_1=mean(Ci), avg.gsw_1=mean(gsw), avg.A.Ci_1=mean(A.Ci), avg.VPcham_1=mean(VPcham), avg.VPDleaf_1=mean(VPDleaf))%>%
+  as.data.frame()
+
+View(licor_avg_1)
+
+# aggregate
+licor_2.2 <- aggregate(licor_2[,c(7:13,15)],by=list(licor_2$X, licor_2$batch, licor_2$treatment),mean)
+View(licor_2.2)
+
+# calculating average of measurements for each tree on each day
+licor_avg_2 <- licor_avg_1%>%
+  group_by(Y, date, tree.id, batch, treatment)%>%
+  dplyr::summarise(avg.E_2=mean(avg.E_1), avg.A_2=mean(avg.A_1), avg.Ca_2=mean(avg.Ca_1), avg.Ci_2=mean(avg.Ci_1), avg.gsw_2=mean(avg.gsw_1), avg.A.Ci_2=mean(avg.A.Ci_1), avg.VPcham_2=mean(avg.VPcham_1), avg.VPDleaf_2=mean(avg.VPDleaf_1))%>%
+  as.data.frame()
+
+View(licor_avg_2)
+
+
+#boxplot and t test for each variable
+
+png("outputs/E.png", width = 1500, height = 1000, res = 300)
+boxplot(licor_2.1$avg.E[licor_2.1$treatment == "control"], licor_2.1$avg.E[licor_2.1$treatment == "cooling"], licor_2.1$avg.E[licor_2.1$treatment == "cooled"],
+        names = c("Control trees", "Cooling trees", "Cooled trees"),
+        ylab = "E")
+dev.off()
+
+t.test(licor_2.1$avg.E[licor_2.1$treatment == "cooled"],
+       licor_2.1$avg.E[licor_2.1$treatment == "control"],
+       alternative = "greater")
+
+
+png("outputs/A.png", width = 1500, height = 1000, res = 300)
+boxplot(licor_2.1$avg.A[licor_2.1$treatment == "control"], licor_2.1$avg.A[licor_2.1$treatment == "cooling"], licor_2.1$avg.A[licor_2.1$treatment == "cooled"],
+        names = c("Control trees", "Cooling trees", "Cooled trees"),
+        ylab = "A")
+dev.off()
+
+t.test(licor_2.1$avg.A[licor_2.1$treatment == "cooled"],
+       licor_2.1$avg.A[licor_2.1$treatment == "control"],
+       alternative = "greater")
+
+
+boxplot(licor_2.1$avg.Ci[licor_2.1$treatment == "control"], licor_2.1$avg.Ci[licor_2.1$treatment == "cooling"], licor_2.1$avg.Ci[licor_2$treatment == "cooled"],
+        names = c("Control trees", "Cooling trees", "Cooled trees"),
+        ylab = "Ci")
+
+
+t.test(licor_2.1$avg.Ci[licor_2.1$treatment == "cooled"],
+       licor_2.1$avg.Ci[licor_2.1$treatment == "control"],
+       alternative = "greater")
+
+
+
+png("outputs/gsw.png", width = 1500, height = 1000, res = 300)
+boxplot(licor_2.1$avg.gsw[licor_2.1$treatment == "control"], licor_2.1$avg.gsw[licor_2.1$treatment == "cooling"], licor_2.1$avg.gsw[licor_2.1$treatment == "cooled"],
+        names = c("Control trees", "Cooling trees", "Cooled trees"),
+        ylab = "gsw")
+dev.off()
+
+t.test(licor_2$mean_gsw[licor_2$treatment == "cooled"],
+       licor_2$mean_gsw[licor_2$treatment == "control"],
+       alternative = "greater")
+
+
+
+png("outputs/A.Ci.png", width = 1500, height = 1000, res = 300)
+boxplot(licor_2.1$avg.A.Ci[licor_2.1$treatment == "control"], licor_2.1$avg.A.Ci[licor_2.1$treatment == "cooling"], licor_2.1$avg.A.Ci[licor_2.1$treatment == "cooled"],
+        names = c("Control trees", "Cooling trees", "Cooled trees"),
+        ylab = "A/Ci")
+dev.off()
+
+t.test(licor_2$mean_A.Ci[licor_2$treatment == "cooled"],
+       licor_2$mean_A.Ci[licor_2$treatment == "control"],
+       alternative = "greater")
+
+
+#ANOVA
+aov_E <- aov(licor_avg_2$avg.E_2 ~ licor_avg_2$batch + licor_avg_2$treatment)
+summary(aov_E) # treatment is very significant (less than o,oo1)
+
+aov_A <- aov(licor_avg_2$avg.A_2 ~ licor_avg_2$batch + licor_avg_2$treatment)
+summary(aov_A) # treatment is very significant
+
+aov_Ci <- aov(licor_avg_2$avg.Ci_2 ~ licor_avg_2$batch + licor_avg_2$treatment)
+summary(aov_Ci) 
+
+aov_gsw <- aov(licor_avg_2$avg.gsw_2 ~ licor_avg_2$batch + licor_avg_2$treatment)
+summary(aov_gsw) # treatment is very significant
+
+aov_A.Ci <- aov(licor_avg_2$avg.A.Ci_2 ~ licor_avg_2$batch + licor_avg_2$treatment)
+summary(aov_A.Ci) # both significant but only 0,01
+
+#how can i visualize?
+
+#is the distribution of residuals normal? let's check the diagnostic plots
+
+plot(aov_E) 
+
+plot(aov_A)
+
+plot(aov_gsw)
+
+plot(aov_A.Ci)
+
+#transforming values to try and make the distribution normal
+
+aov_E.1 <- aov(sqrt(licor_avg_2$avg.E_2) ~ licor_avg_2$batch + licor_avg_2$treatment)
+  
+aov_E.2 <- aov(log(licor_avg_2$avg.E_2) ~ licor_avg_2$batch + licor_avg_2$treatment)
+plot(aov_E.2)
+
+aov_A.1 <- aov(sqrt(licor_2.1$avg.A) ~ licor_2.1$batch + licor_2.1$treatment)
+plot(aov_A.1)
+
+aov_A.2 <- aov(log(licor_avg_2$avg.A_2) ~ licor_avg_2$batch + licor_avg_2$treatment)
+plot(aov_A.2)
+
+aov_gsw.1 <- aov(sqrt(licor_2.1$avg.gsw) ~ licor_2.1$batch + licor_2.1$treatment)
+plot(aov_gsw.1)
+
+aov_gsw.2 <- aov(log(licor_2.1$avg.gsw) ~ licor_2.1$batch + licor_2.1$treatment)
+plot(aov_gsw.2)
+
+aov_A.Ci.1 <- aov(sqrt(licor_2.1$avg.A.Ci) ~ licor_2.1$batch + licor_2.1$treatment)
+plot(aov_A.Ci.1)
+
+aov_A.Ci.2 <- aov(log(licor_2.1$avg.A.Ci) ~ licor_2.1$batch + licor_2.1$treatment)
+plot(aov_A.Ci.2)
+
+
+#Kruskal-Wallis
+KW_E <- kruskal.test(licor_2.1$avg.E ~ licor_2.1$batch, licor_2.1$treatment)
+summary(KW_E)
+plot(KW_E)
+??kruskal
+
+temp <- read.table("dati/CR1000X_Yann_XinCooling.dat", header=TRUE, sep=",", skip=3, na.strings = "NAN")
+View(temp)
+
+temp_1 <- na.omit(temp)
+View(temp_1)
+
+wilcox.test(licor_2.1$avg.A ~ licor_2.1$batch + licor_2.1$treatment, data=licor_2.1)
+
+#all temp values in same column to match licor with dates
+
+barplot(licor_2.1$avg.A)
+
+barplot(licor_2.1$avg.E)
+
+
