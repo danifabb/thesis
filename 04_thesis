@@ -42,8 +42,11 @@ licor_avg_2 <- licor_avg_1%>%
 
 View(licor_avg_2)
 
+licor_avg_2 <- licor_avg_2[-c(58, 63), ]
+
 #chronological order
 #licor_date <- licor_avg_2[order(as.Date(licor_avg_2$date, format="%d/%m/%Y")), ]
+
 
 #boxplot and t test for each variable
 
@@ -239,7 +242,8 @@ View(temp)
 
 temp_1 <- na.omit(temp)
 View(temp_1)
-#removing dates before/ after exp
+
+#removing days before and after measurements
 temp_2 <- temp[-c(1:40418, 273468:306236), ]
 View(temp_2)
 
@@ -254,9 +258,9 @@ temp_2$date <- as.Date(temp_2$date, format = "%Y-%m-%d")
 temp_2$date <- format(temp_2$date, "%d/%m/%Y")
 
 
-#temp_3 <- temp_2[,-(1:3),drop=FALSE]
-#temp_4 <- data.frame(all_values=unlist(temp_3))
-#View(temp_4)
+temp_5 <- temp_4[,-c(1, 2),drop=FALSE]
+temp_5 <- data.frame(all_values=unlist(temp_5))
+View(temp_5)
 
 #calculating average for temperature values (each day)
 temp_3 <- temp_2%>%
@@ -280,7 +284,7 @@ temp_3 <- temp_3[order(as.Date(temp_3$date, format="%d/%m/%Y")), ]
 #licor_avg_cool1 <- licor_avg_2[licor_avg_2$tree.id %in% c('BQ1','BQ4','BQ7', 'BQ10'),]
 #View(licor_avg_cool1)
 
-#days we measured only
+# keeping only the days during which we measured gas exch
 temp_4 <- temp_3[temp_3$date %in% c('30/06/2023', '03/07/2023', '04/07/2023', '10/07/2023', '13/07/2023', '19/07/2023', '21/07/2023', '25/07/2023', '28/07/2023', '01/08/2023', '04/08/2023', '07/08/2023', '09/08/2023', '10/08/2023'), ]
 View(temp_4)
 
@@ -295,6 +299,20 @@ merged <- merged[order(as.Date(merged$date, format="%d/%m/%Y")), ]
 w_pot <- read.csv("dati/leafpsi_2023.csv", sep = ";", header = TRUE, dec =",")
 View(w_pot)
 
-# linear regression
+# order by treatment
+licor_char <- licor_avg_2[order(as.factor(licor_avg_2$treatment)), ]
+View(licor_char)
+
+install.packages("HH")
+library(HH)
+ancova((1/avg.A_2) ~  batch + treatment, data=licor_avg_2)
+
+
+
+
+
+
+
+
 
 
