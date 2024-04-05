@@ -391,4 +391,24 @@ cor.test(licor_avg_3$water_potential,
 
 abline(lm(licor_avg_3$avg.A_2 ~ licor_avg_3$water_potential))
 
+plot(licor_avg_3$water_potential, licor_avg_3$avg.A.Ci_2)
+
+#correlation test
+cor.test(licor_avg_3$water_potential, 
+         licor_avg_3$avg.A.Ci_2,
+         alternative = "greater")
+
+abline(lm(licor_avg_3$avg.A.Ci_2 ~ licor_avg_3$water_potential))
+
+plot(licor_avg_3$water_potential, licor_avg_3$avg.E_2)
+
+#correlation test - not significant
+cor.test(licor_avg_3$water_potential, 
+         licor_avg_3$avg.E_2,
+         alternative = "greater")
+
+
+
+
+
 
