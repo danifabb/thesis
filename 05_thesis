@@ -346,3 +346,15 @@ plot(fit)
 write.csv(licor_avg_2, "outputs/licor_avg_2.csv", sep= '.')
 write.csv(temp_4, "outputs/soil_temperature.csv")
 
+licor_avg_3 <- licor_avg_2[licor_avg_2$date %in% c('04/07/2023','10/07/2023', '19/07/2023', '21/07/2023', '25/07/2023', '01/08/2023', '04/08/2023', '10/08/2023'), ] 
+View(licor_avg_3)
+
+w_pot_2 <- w_pot[-c(11:15, 29), ]
+View(w_pot_2)
+
+licor_avg_3$water_potential <- c(13.06, 13.56, 11.58, 13.02, 10.07, 10.55, 9.03, 9.55, 11.03, 10.54, 6.55, 7.08, 7.53, 7.52, 8.05, 7.59, 8.55, 9.02, 8.52, 8.50, 10.05, 12.00, 9.03, 7.51, 7.05, 7.08, 5.55, 7.03, 5.05, 7.07, 11.02, 7.04, 7.09, 7.05, 7.55, 8.56, 9.05, 10.06, 10.03)
+View(licor_avg_3)
+
+fit <- lm(licor_avg_3$avg.A_2 ~ licor_avg_3$water_potential)
+summary(fit)
+plot(fit)
