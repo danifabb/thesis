@@ -1,0 +1,145 @@
+licor_1 <- read.csv("dati/final_version_with_comment_1a - Copia.csv", sep = ";", header = TRUE, dec =",")
+View(licor_1)
+
+licor_1$treatment <- factor(licor_1$treatment) 
+
+# A/Ci column 
+licor_1$A.Ci <- licor_1$A/licor_1$Ci
+
+# let's remove outliers
+licor_2 <- subset(licor_1, licor_1$comment != "outlier")
+
+#calculating average of the three values per leaf
+library(dplyr)
+
+licor_avg_1 <- licor_2%>%
+  group_by(X, date, tree.id, batch, treatment, replicate, Y)%>%
+  dplyr::summarise(avg.E_1=mean(E), avg.A_1=mean(A), avg.Ca_1=mean(Ca), avg.Ci_1=mean(Ci), avg.gsw_1=mean(gsw), avg.A.Ci_1=mean(A.Ci), avg.VPcham_1=mean(VPcham), avg.VPDleaf_1=mean(VPDleaf), avg.Q_1=mean(Q_out))%>%
+  as.data.frame()
+
+# calculating average of measurements for each tree on each day
+licor_avg_2 <- licor_avg_1%>%
+  group_by(Y, date, tree.id, batch, treatment)%>%
+  dplyr::summarise(avg.E_2=mean(avg.E_1), avg.A_2=mean(avg.A_1), avg.Ca_2=mean(avg.Ca_1), avg.Ci_2=mean(avg.Ci_1), avg.gsw_2=mean(avg.gsw_1), avg.A.Ci_2=mean(avg.A.Ci_1), avg.VPcham_2=mean(avg.VPcham_1), avg.VPDleaf_2=mean(avg.VPDleaf_1), avg.Q_2=mean(avg.Q_1))%>%
+  as.data.frame()
+
+View(licor_avg_2)
+
+# best diagnostic plots (anova or poisson)
+
+#A
+poissA <- glm(avg.A_2 ~ batch + treatment, data=licor_avg_2, family=poisson()) #is this ok?
+summary(poissA)
+par(mfrow=c(2,2))
+plot(poissA)
+
+#E
+aov_E.2 <- aov(log(licor_avg_2$avg.E_2) ~ licor_avg_2$batch + licor_avg_2$treatment)
+plot(aov_E.2) # is this ok?
+
+#gsw
+aov_gsw.2 <- aov(log(licor_avg_2$avg.gsw_2) ~ licor_avg_2$batch + licor_avg_2$treatment)
+plot(aov_gsw.2) # is this ok?
+
+#A/Ci
+aov_A.Ci <- aov(licor_avg_2$avg.A.Ci_2 ~ licor_avg_2$batch + licor_avg_2$treatment)
+summary(aov_A.Ci) # both significant but only 0,01
+plot(aov_A.Ci) #is this ok?
+
+aovp_A.Ci <- aovp(licor_avg_2$avg.A.Ci_2 ~ licor_avg_2$batch + licor_avg_2$treatment)
+plot(aovp_A.Ci) #is this ok?
+
+poissA.Ci <- glm(avg.A.Ci_2 ~ batch + treatment, data=licor_avg_2, family=poisson())
+summary(poissA.Ci) # not significant
+plot(poissA.Ci) #good
+
+
+# histograms for distribution
+
+hist(licor_avg_2$avg.A_2, 
+     breaks=12,
+     main= "Histogram for Assimilation")
+
+hist(licor_avg_2$avg.E_2,
+     breaks=12,
+     main= "Histogram for Evapotranspiration")
+
+hist(licor_avg_2$avg.gsw_2,
+     breaks=12,
+     main= "Histogram for stomatal conductance")
+
+hist(licor_avg_2$avg.A.Ci_2,
+     breaks=12,
+     main= "Histogram for A/Ci")
+
+### GAS EXCH VS SOIL T (regression)
+
+#new column for soil temperature, with mean values for each day and each tree
+licor_avg_2$soil_temperature <- c(5.165599, 5.244229, 6.994229, 2.634512, 3.064366, 17.08293, 16.39777, 3.684478, 2.368306, 3.565989, 3.070011, 1.980472, 3.364987, 16.68514, 15.79022, 5.792202, 21.93107, 4.238358, 23.07499, 3.383498, 3.13424, 4.337276, 5.644117, 5.697607, 3.102319, 6.945484, 24.66709, 25.19100, 24.82654, 24.27996, 3.331607, 2.011076, 3.165969,25.47543, 26.42160, 4.064173, 2.589215, 5.093095, 3.330214, 5.326995, 20.53549, 21.35902, 5.043627, 7.447564, 7.289648, 4.041999, 7.672780, 4.844551, 24.45840, 24.31986, 4.854806, 8.183644, 5.437522, 33.75890, 33.67237, 7.398282, 8.350280, 5.978569, 7.078955, 5.985372, 6.020313, 24.60876, 24.56076)
+View(licor_avg_2)
+
+#best diagnostic plots
+#A
+fitA2 <- lm(sqrt(licor_avg_2$avg.A_2) ~ licor_avg_2$soil_temperature)
+summary(fitA2)
+plot(fitA2) #is this ok? 
+
+fitA_VPD <- lm(licor_avg_2$avg.A_2 ~ licor_avg_2$soil_temperature + licor_avg_2$avg.VPDleaf_2 + licor_avg_2$avg.VPcham_2)
+summary(fitA_VPD)
+par(mfrow=c(2,2))
+plot(fitA_VPD) # kind of good (better than just soil T)
+
+fitA_batch <- lm(licor_avg_2$avg.A_2 ~ licor_avg_2$soil_temperature + licor_avg_2$batch)
+summary(fitA_batch)
+par(mfrow=c(2,2))
+plot(fitA_batch) # slightly better?
+
+fitA_Q <- lm(licor_avg_2$avg.A_2 ~ licor_avg_2$soil_temperature*licor_avg_2$avg.VPDleaf_2*licor_avg_2$avg.VPcham_2*licor_avg_2$batch*licor_avg_2$avg.Q_2)
+summary(fitA_Q)
+par(mfrow=c(2,2))
+plot(fitA_Q) # is this ok?
+
+#E
+fitE3 <- lm(log(licor_avg_2$avg.E_2) ~ licor_avg_2$soil_temperature)
+plot(fitE3) #is this ok?
+
+#A/Ci
+fitA.Ci2 <- lm(sqrt(licor_avg_2$avg.A.Ci_2) ~ licor_avg_2$soil_temperature)
+summary(fitA.Ci2)
+plot(fitA.Ci2) # is this ok?
+
+fitA.Ci_VPD <- lm(licor_avg_2$avg.A.Ci_2 ~ licor_avg_2$soil_temperature + licor_avg_2$avg.VPDleaf_2 + licor_avg_2$avg.VPcham_2)
+summary(fitA.Ci_VPD) # again, a bit better than just soil T (with or without VPchamber)
+plot(fitA.Ci_VPD)
+
+fitA.Ci_batch <- lm(licor_avg_2$avg.A.Ci_2 ~ licor_avg_2$soil_temperature + licor_avg_2$batch)
+summary(fitA.Ci_batch) 
+plot(fitA.Ci_batch) # slightly better
+
+fitA.Ci_Q <- lm(licor_avg_2$avg.A.Ci_2 ~ licor_avg_2$soil_temperature*licor_avg_2$avg.VPDleaf_2*licor_avg_2$avg.VPcham_2*licor_avg_2$batch*licor_avg_2$avg.Q_2)
+summary(fitA.Ci_Q) 
+plot(fitA.Ci_Q) # is this ok?
+
+
+### GAS EXCH VS WATER POT
+
+#keeping only the days where we also measured w pot
+licor_avg_3 <- licor_avg_2[licor_avg_2$date %in% c('04/07/2023','10/07/2023', '19/07/2023', '21/07/2023', '25/07/2023', '01/08/2023', '04/08/2023', '10/08/2023'), ] 
+View(licor_avg_3)
+
+#adding column for w pot to licor data
+licor_avg_3$water_potential <- c(13.06, 13.56, 11.58, 13.02, 10.07, 10.55, 9.03, 9.55, 11.03, 10.54, 6.55, 7.08, 7.53, 7.52, 8.05, 7.59, 8.55, 9.02, 8.52, 8.50, 10.05, 12.00, 9.03, 7.51, 7.05, 7.08, 5.55, 7.03, 5.05, 7.07, 11.02, 7.04, 7.09, 7.05, 7.55, 8.56, 9.05, 10.06, 10.03)
+View(licor_avg_3)
+
+#best diagnostic plots
+fit_A <- lm(licor_avg_3$avg.A_2 ~ licor_avg_3$water_potential)
+summary(fit_A) # significant for slope, not for intercept
+par(mfrow=c(2,2))
+plot(fit_A)
+
+fit_A.Ci <- lm(licor_avg_3$avg.A.Ci_2 ~ licor_avg_3$water_potential)
+summary(fit_A.Ci) #sign for slope, not intercept
+plot(fit_A.Ci)
+
+
+
