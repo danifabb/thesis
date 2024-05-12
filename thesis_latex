@@ -1,0 +1,322 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[a4paper, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} 
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{natbib}
+\usepackage{newtxtext,newtxmath}
+\usepackage{mathtools}
+\usepackage{float}
+
+\title{Thesis}
+\author{Daniela Fabbri}
+\date{ }
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\setstretch{1.5}
+
+\newpage
+\section{Introduction} \label{sec:intro}
+
+\subsection{The phloem}
+\subsubsection{Structure and function}
+The phloem is a tissue that allows long-distance transport (translocation) of photosynthates, or products of photosynthesis. Redistribution of water and other compounds is another one of its functions. Photosynthates must be transported from their source, typically mature leaves, to areas of growth that are unable to produce enough assimilates, such as young leaves, fruits, or roots. Storage organs, including roots, tubers and rhizomes, can be both sink, when accumulating nutrients, and source, when providing said nutrients to the plant body during winter or other stress-inducing times (Taiz \& Zeiger, ). Seeds do the same, transitioning from source to sink when they germinate and need to demolish the resources that they accumulated as starch to support the new plant’s growth (Rascio et al., 2017).
+\smallskip
+
+In Angiosperms, which are the main object of research on the phloem, xylem and phloem form vascular tissues that extend throughout the plant body, with the xylem being usually closer to the centre of the stem (or the root), and the phloem on the outer side (Taiz \& Zeiger, ). The two continuously exchange water. %specify primary vs secondary growth?
+\smallskip
+
+The phloem is made up of living cells belonging to three different categories: sieve elements, companion cells and parenchymatic cells. In Angiosperms, sieve elements are roughly cylinder-shaped cells that are stacked on top of each other, forming a sieve tube (Rascio et al., 2017). Cross walls separating the cells are perforated by pores, forming sieve plates, to achieve symplastic continuity and a higher hydraulic conductance inside the tube, as Figure \ref{fig:sieve} shows (Peters \& Knoblauch, 2022). As sieve cells do not possess a nucleus, a cytoskeleton and other essential organelles, each sieve cell is associated with one or more companion cells. Plasmodesmata provide a close symplastic relationship between sieve cells and companion cells. The latter have intense metabolic activity and are responsible for the survival of the anucleate sieve cells. They also contribute to the transport of photosynthates from mesophyll cells in leaves, where they are produced, to sieve cells (Rascio et al., 2017).
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.4\textwidth, angle=0]{images/sieve.png}
+    \caption{\textit{Electron micrograph of a longitudinal section of two sieve tube elements, showing the pores of the sieve plate between them, in the hypocotyl of Cucurbita maxima. The inset shows sieve plate pores. Image taken from Taiz \& Zeiger, }}
+    \label{fig:sieve}
+\end{figure}
+
+Phloem sap is rich in sucrose, varying from 0.3 to 0.9 M in concentration. In addition to sucrose, the phloem of certain plant families also contains high concentrations of sugar alcohols like mannitol and carbohydrates like raffinose and stachyose. Other solutes in lower concentrations include amino acids, hormones, proteins and inorganic solutes (Taiz \& Zeiger, ). 
+\smallskip
+
+Long-distance transport in the phloem is usually explained by the pressure-flow hypothesis, formulated by Ernst Münch in the 1920s. The hypothesis states that mass flow of water and solutes in the phloem is driven by an osmotically induced pressure gradient between source and sink organs, as Figure \ref{fig:munch} shows. The loading of photosynthates into the sieve elements at the source causes a low solute potential ($\Psi_s$), which in turn causes a negative water potential ($\Psi_w$), so that water is drawn into the phloem from neighboring xylem tissue. The opposite phenomenon happens in the sink organs, where photoassimilates are unloaded from the sieve elements and water potential becomes more positive, leading water to leave the phloem as well. This creates a difference in turgor pressure ($\Delta P$), which is higher at the source, pushing the fluid along the phloem, and lower at the sink (Knoblauch et al, 2016). 
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth, angle=0]{images/Munch_schema_tagl.png}
+    \caption{\textit{Relationship between xylem and phloem. Water enters the phloem at the source and leaves at the sink because of a water potential difference ($\Delta\Psi_w$), while source-to-sink mass flow is made possible by a difference in turgor pressure ($\Delta P$). Image taken from Rascio N. et al., 2017.}}
+    \label{fig:munch}
+\end{figure}
+
+\subsubsection{Source-sink interrelationship}
+Carrying out experiments on the phloem is not easy, which is why it has been called “the least understood plant tissue”. Usually, experiments have to be done on whole plants, as you cannot detach source tissues from sink tissues without stopping the sap flow. Even the Münch hypothesis needs further testing, especially on the issue of sieve tubes conductance being high enough to allow pressure flow (Knoblauch et al, 2016). % I find this unclear, ask abt it + is it relevant to put papers on the testing of the münch hyp here?
+In addition to research on phloem translocation, studying source-sink interrelationship is also useful for a deeper understanding of plant physiology. This topic can be explored by applying a variety of treatments, such as girdling and defruiting, to plants, and can have applications in agriculture as well, if fruits are the sink organs being studied.
+\smallskip
+
+In Frank et. al, 2006, the authors girdled \textit{Coffea arabica} branches at their base, that is to say they removed a ring of phloem to create a closed system environment. They subsequently measured total soluble sugar concentration (\(SSC_m\)) and maximal leaf net \(CO_2\) assimilation rate (\(A_{max}\) on the mature leaves of the girdled branches. The results showed that (\(A_{max}\) was negatively correlated to (\(SSC_m\)), that it was higher in branches with higher fruit loads and that it decreased during the day. A conclusion was drawn that there was sink feedback down-regulating photosynthesis e. g. low fruit loads demanded less photosynthates. It is thought that the feedback is mediated by the accumulation of sugars in the leaf phloem, which inhibits phloem loading, and leads to better coordination of source photosynthetic activity and sink organ demand. 
+\smallskip
+
+A similar experiment (Da Matta et al., 2007) on coffee involved 4 different treatments: 
+\begin{itemize}
+\item complete defruiting and maintenance of the full leaf area
+\item half crop load and full leaf area
+\item full crop load and full leaf area
+\item full crop load and half leaf area. 
+\end{itemize}
+The first treatment resulted in the lowest net photosynthetic rate (A) and stomatal conductance (g), the third treatment had the highest A and g, while the other two treatments had intermediate results. 
+\smallskip
+
+However, here a different conclusion is proposed: the decreased A in the first treatment is thought to be caused not by direct sink feedback, but by the lower stomatal conductance, as the two were correlated. The reason for the lower g remains unknown.
+% I don't understand why authors come to different conclusion here
+Other than fruits, roots can also be studied as sink organs down-regulating photosynthesis, as this thesis will investigate.
+%labelling?
+
+\subsection{\textit{Betula pendula}}
+\textit{Betula pendula}, or European white birch, is a deciduous tree with white bark, drooping outer branches and an average height of 25 m (ref Vakkari P., 2009). Leaves are simple, triangular-shaped, with a dentate margin. It is a Eurosiberian tree distributed in almost all of Europe (but most abundant in Northern Europe) and many parts of Asia and North America (ref gbif website). Information on \textit{Betula pendula}'s vascular tissues, shown in Figure \ref{fig:stem}, and on sink limitation is scarce, as studies are usually conducted on model organisms like \textit{Arabidopsis thaliana}.
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.3\textwidth]{images/birch_stem.png}
+    \caption{Cross section of \textit{Betula pendula}'s stem. Secondary growth with outer phloem tissue (ph), cambial zone (ca) and inner xylem (xy). Image taken from (Hellman et al., 2018).}
+    \label{fig:stem}
+\end{figure}
+
+
+\newpage
+\section{Aim of the thesis}
+The present work was conducted in the framework of Xin Zhuang’s Doctorate research. The wider scope of the experiment was a study on the effects of sink limitation on (\textit{Betula pendula}) source activity and carbon translocation in the phloem (Zhuang et al, ?). This thesis focuses on part of the results, namely the effects of sink limitation on canopy photosynthesis, and whether reduced sink activity limits source activity.
+\smallskip
+
+Sink activity reduction was achieved by cooling the soil around the roots of 12 saplings, while 8 other trees were left untreated to function as controls. Gas exchange parameters such as \(CO_2\) net assimilation and photosynthetic efficiency were measured with the purpose of researching how the sink limitation created by soil cooling affects leaf photosynthetic activity. I am also going to report on the results of the water status monitoring (water potential monitoring) during the experiment. 
+% Mentioning 2020 similar experiment and results?
+% Is it clear how source activity/ photosynthesis and translocation/ phloem transport are connected? If not, I should write about it more in depth.
+
+\newpage
+\section{Materials and Methods}
+Firstly, I am going to describe how we prepared for the experiment and the conditions under which it was performed (subsection 2.1). 
+\smallskip
+
+Then, in subsection 2.2, I am going to talk about the parameters that were measured in order to study the effects of sink limitation on photosynthesis and hydraulic status of the saplings. 
+\smallskip
+
+Subsection 2.3 is a description of the statistical analysis that was conducted to achieve the results. %should I just put this under Results?
+
+\subsection{Experiment setup}
+I was able to witness and work on the experiment during my time as a trainee at the University of Helsinki, under the mentorship of Xin Zhuang and the supervision of Dr Yann Salmon.
+\smallskip
+
+The experiment took place at the Viikki Campus (Department of Forest Sciences, Faculty of Agriculture and Forestry), at the University of Helsinki, in a greenhouse environment, starting from 20th June 2023 and ending on 21th August of the same year. The environmental conditions in the greenhouse were 21°C and 60\% relative humidity on average. The setup involved 20 birch saplings (\textit{Betula pendula}), of approximately 3-5 years of age and 2-2.5 m tall. The trees were replanted in 20-liter pots with a mixture of forest peat and original nursery field soil, and placed in the greenhouse a week before the start of the measurements. 
+\smallskip
+
+The LAUDA thermostat (Figure \ref{fig:lauda}) was used to bring temperature down to 4±3 °C, with the aim of studying the effects of the cooled-down soil on photosyntetic activity and carbon translocation. The thermostat consists of a refrigeration unit and a tubing system, which was filled with anti-freeze \citep{Lauda_Dr._R._Wobser_GMBH_and_CO._KG_1989}. The silicone tubes were buried in the pots so that they were closer to the roots, cooling them more efficiently. Further insulation was achieved by putting the pots into coolbags and wrapping foam around the tubes (Figure \ref{fig:treated}). 
+% Further info? Separate chapter?
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.5\textwidth, angle=270]{lauda.jpg}
+    \caption{\textit{Lauda cooling system.}}
+    \label{fig:lauda}
+\end{figure}
+\smallskip
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.5\textwidth, angle=270]{treated_trees_2.jpg}
+    \caption{\textit{Treated trees in the greenhouse.}}
+    \label{fig:treated}
+\end{figure}
+
+\subsection{Measurements}
+Measurements were taken on five trees at a time. Every group consisted of two untreated control trees and three treated trees that had been cooled down. The first group was measured from 30th June to 13th July; the second group was measured from 13th July to 1st August; the third group was measured from 1st August to 7th August; the fourth group was measured from 7th August to 10th August. 
+\smallskip
+
+The difference in canopy source activity and tree water status between control saplings and treated saplings was estimated through several parameters. For leaf photosynthetic activity, gas exchange parameters (assimilation of \(CO_2\), \(H_2 O\) evapo-transpiration, stomatal conductance, photosynthetic efficiency) were measured. For tree hydraulic status, we monitored the water potential. The instruments used during the experiment were the LI-6800 (LI-COR’s fourth generation portable photosynthesis system), a pressure chamber for water potential, and ...
+%(instrument for soil temperature, name?) 
+The experiment also aimed at studying the effect of soil cooling on carbon translocation and not just photosynthetic activity, which is why we used ${}^{13} C$ pulse-labeling to the canopy with the purpose of determining changes in phloem transport velocity between the control trees and the cooled trees. 
+\smallskip
+
+\subsubsection{Gas exchange}
+The leaf surface loses \(H_2 O\) (evapotranspiration) and takes up \(CO_2\) (assimilation) through stomatal apertures. The  While the relative water vapor concentration in the leaf is greater than its concentration in the atmosphere, due to xylem activity, the opposite is true for \(CO_2\) concentration, which is lower in the leaf. These concentration gradients are maintained by stomatal resistance. %ref manual 
+% theory about stomata will be in introduction, so it is not needed here
+\smallskip
+
+After burying the tubes in the pots and turning the cooling system on, we waited 2-3 days for the soil to cool down, and started measuring gas exchange with the LI-6800. This instrument (Figure \ref{fig:licor}) can measure photosynthetic processes happening at leaf-level without destroying the sample. Several leaf chambers of different dimensions are available; for this experiment, a \(6-cm^2\)-area chamber was used.
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.4\textwidth, angle=270]{images/licor_1.jpg}
+    \caption{\textit{Portable Photosynthesis System closed onto birch leaf.}}
+    \label{fig:licor}
+\end{figure}
+
+%do I need to explain what Licor looks like as well? Parts?
+After the chamber is closed onto a leaf, two parameters, \(CO_2\) net assimilation (\textit{A}) and \(H_2 O\) evapo-transpiration (\textit{E}), can be measured with infrared gas analysers. This is based on the difference in \(CO_2\) and \(H_2 O\) concentration between the air in the leaf chamber, which is affected by the leaf, and air that is not (reference). Before measuring, a reference needs to be set for \(CO_2\) concentration, humidity and light going into the chamber: for our experiment, a \(CO_2\) concentration of 400 $\mu$mol $mol^{-1}$  and 60\% relative humidity were chosen. The light was set at 500 $\mu$mol $m^{-1}s^{-1}$. 
+\smallskip 
+
+As Figure \ref{fig:chamber} shows, LI-6800 measures the flow rate ($\mu$mol air $s^{-1}$) and the  \(CO_2\) and \(H_2 O\) concentrations (\textit{$\mu_0$}, \textit{$c_0$}, \textit{$w_0$} respectively) before entering the leaf chamber. \(CO_2\) and water vapor concentrations (\textit{$c_a$} and \textit{$w_a$} respectively) are then measured again after coming out of the chamber. 
+\smallskip
+
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.5\textwidth]{images/licor_chamber.png}
+    \caption{\textit{Schematic of LI-6800 gas exchange system. Reference from (licor manual)}}
+    \label{fig:chamber}
+\end{figure}
+
+\noindent While the flow rate exiting the chamber ($\mu_a$) is not directly measured, it is assumed that the water vapor released by the leaf will be added to the $\mu_0$: 
+\begin{equation}
+    \mu_a = \mu_0 + sE
+    \label{eq:flow}
+\end{equation}
+where \textit{s} represents leaf area.
+\smallskip
+
+\noindent Transpiration on a leaf area basis can be calculated as: 
+\begin{equation}
+    sE = \mu_a w_a - \mu_0 w_0
+    \label{eq:transpiration}
+\end{equation}
+
+\noindent Equation \ref{eq:flow} and \ref{eq:transpiration} can be rearranged to calculate E:
+
+\begin{equation}
+    E = \frac{\mu_0(w_a - w_0)}{s(1 - w_a)}
+\end{equation}
+
+\noindent Calculating \(CO_2\) assimilation is similar, but in this case the gas is being taken up by the leaf and fixed during the Calvin cycle, so $c_a$ is going to be lower than $c_0$:
+
+\begin{equation}
+    sA = \mu_0 w_0 - \mu_a w_a
+    \label{eq:assimilation}
+\end{equation}
+
+\noindent By rearranging equations \ref{eq:flow} and \ref{eq:assimilation}, we get:
+
+\begin{equation}
+    A = \frac{\mu_0 [c_0 - c_a (\frac{1 - w_0}{1 - w_a})]}{s}
+\end{equation}
+
+Other parameters, e. g. stomatal conductance (\textit{gsw}) and intercellular \(CO_2\) concentration ($C_i$), are calculated thanks to other measurements taken by LI-6800, including leaf temperature.
+\smallskip
+
+We measured \textit{A}, \textit{E}, \textit{gsw} and \textit{$C_i$} on multiple days for each batch. For example, the saplings from batch 1 (treated trees BQ1, BQ2, BQ3 and controls BC1 and BC2) were measured on 30th June and on 4th, 10th and 13th July. For each tree, three leaves (replicates) were selected to be measured, and each measurement was repeated three times. As an example, Table \ref{tab:controls} shows the measurements that were taken on 4th July for the control trees. An average of the three values was then calculated and used for our analysis. 
+
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{| l | l | l | l | l | l | l |}
+\hline
+TIME & TREE ID & REPLICATE & \textit{E} & \textit{A} & \textit{Ci} & \textit{gsw} \\
+\hline
+10:41:36 & BC1 & 1 & 0,001766 & 11,2275 & 244,925 & 0,137237 \\
+\hline
+10:43:31 & BC1 & 1 & 0,001716 & 11,31848 & 241,3424 & 0,134534 \\
+\hline
+10:44:43 & BC1 & 1 & 0,001702 & 11,3601 & 239,3733 & 0,133086 \\
+\hline
+11:00:11 & BC1 & 2 & 0,001906 & 14,15517 & 217,8557 & 0,146854 \\
+\hline
+11:01:08 & BC1 & 2 & 0,001867 & 14,26866 & 214,0073 & 0,144471 \\
+\hline
+11:02:04 & BC1 & 2 & 0,001887 & 14,28922 & 215,357 & 0,146011 \\
+\hline
+11:15:54 & BC1 & 3 & 0,003471 & 12,66993 & 301,7897 & 0,285015 \\
+\hline
+11:17:30 & BC1 & 3 & 0,003373 & 12,62602 & 301,5399 & 0,282158 \\
+\hline
+11:18:47 & BC1 & 3 & 0,00331 & 12,59355 & 300,9615 & 0,27851 \\
+\hline
+11:55:53 & BC2 & 1 & 0,003087 & 14,68526 & 276,676 & 0,250679 \\
+\hline
+11:56:44 & BC2 & 1 & 0,00312 & 14,71186 & 276,8577 & 0,251933 \\
+\hline
+11:57:26 & BC2 & 1 & 0,003126 & 14,64707 & 277,4459 & 0,252505 \\
+\hline
+12:12:56 & BC2 & 2 & 0,002637 & 11,30982 & 290,1498 & 0,212438 \\
+\hline
+
+\end{tabular}
+\label{tab:controls}
+\end{table}
+
+
+\begin{table}
+\centering
+
+\begin{tabular}{| l | l | l | l | l | l | l |}
+\hline
+TIME & TREE ID & REPLICATE & \textit{A} & \textit{E} & \textit{Ci} & \textit{gsw} \\
+\hline
+12:13:58 & BC2 & 2 & 0,002633 & 11,29484 & 290,7186 & 0,213459 \\
+\hline
+12:15:17 & BC2 & 2 & 0,0026 & 11,32306 & 289,9024 & 0,211932 \\
+\hline
+12:31:16 & BC2 & 3 & 0,002889 & 13,70625 & 276,4829 & 0,230113 \\
+\hline
+12:31:56 & BC2 & 3 & 0,002941 & 13,75695 & 278,1119 & 0,235174 \\
+\hline
+12:32:39 & BC2 & 3 & 0,002905 & 13,78629 & 277,2324 & 0,233377 \\
+\hline
+
+\end{tabular}
+
+\end{table}
+
+
+\subsubsection{Water potential}
+%what is water potential, etc from textbook
+The pressure chamber (Figure \ref{fig:pressure}) is a device for measuring water potential by applying pressure to a leaf thanks to a nitrogen tank. For our experiment, two leaves were taken from each tree and inserted in the chamber one at a time, with the cut end of the stem exposed outside of it. 
+Pressure was then applied until water appeared at the surface of the exposed end. This is the amount of pressure that is equal and opposite to the water potential measurement. Therefore, higher values of pressure indicate higher stress for the tree. Maximum instrument operating pressure was 100 Bar \citep{PMS_Instrument_Company_2009}.
+\smallskip
+% explain how it was used in experiment + second image (?)
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.5\textwidth]{images/pressure_chamber.jpg}
+    \caption{\textit{Pressure chamber in the greenhouse.}}
+    \label{fig:pressure}
+\end{figure}
+
+Measurements were taken in the early afternoon to make sure they were comparable, as water potential changes during the day, usually having the most negative values at midday.
+%$ \prescript{13}{}{\(CO_2\)} $
+\subsubsection{Isotope pulse-labeling}
+ For our experiment, the labeled ${}^{13} CO_2$ was pumped into plastic bags that had been wrapped around the birches' canopy. Labeled carbon  was then traced with Picarro's G2201-i Isotopic Analyzer, as it was transported from the source (leaves) to the sink organs, via the phloem. Chambers were sealed at two different locations along the stem and connected to the analyzer, so that the carbon could be traced when it respired. The difference in time lags between the appearance of labeled C at the first and second location can be used to establish phloem sap velocity \citep{Epron_D._et_al._2019}. However, this data is still being processed by Xin Zhuang, as it requires complex analysis, therefore it will not be discussed any further in this thesis.
+%image?
+
+\newpage
+
+\begin{thebibliography}{9}
+
+\bibitem[Epron D. et al. (2019)]{Epron_D._et_al._2019}
+Epron, D., Dannoura, M., Plain, C. (2019), Using 13C to Quantify Phloem Transport on Tall Plants in the Field. Methods Mol Biol. 2014:145-151. \url{https://doi.org/10.1007/978-1-4939-9562-2_12}. PMID: 31197793.
+
+\bibitem[Lauda Dr. R. Wobser GMBH and CO. KG(1989)]{Lauda_Dr._R._Wobser_GMBH_and_CO._KG_1989}
+Lauda Dr. R. Wobser GMBH and CO. KG (1989), Lauda transparent thermostats CSD 15, CSD 20, CSD 30 to DIN 12879. 03/89 from series H01 YACE0025.
+
+\bibitem[PMS Instrument Company (2009)]{PMS_Instrument_Company_2009}
+PMS Instrument Company (2009), Model 1505D Pressure Chamber Instrument. Operating Instructions.
+\url{https://www.ambimet-instrumentacion.cl/wp-content/uploads/2021/03/Camara-de-Presion-Model-1505D.pdf}
+
+
+% add manual for licor 
+
+\end{thebibliography}
+
+
+
+\end{document}
