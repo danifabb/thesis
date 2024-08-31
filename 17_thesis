@@ -28,7 +28,9 @@ licor_avg_2 <- licor_avg_1%>%
 
 View(licor_avg_2)
 
+# remove batch 3 + batch is an ordered factor
 licor_avg_2 <- subset(licor_avg_2, licor_avg_2$batch != "3")
+licor_avg_2$batch <- factor(licor_avg_2$batch)
 View(licor_avg_2)
 
 # GAS EXCHANGE ~ BATCH + TREATMENT
@@ -220,12 +222,13 @@ View(licor_avg_2)
 
 #A - significant
 gammaA <- glm(formula = licor_avg_2$avg.A_2 ~ licor_avg_2$batch + licor_avg_2$soil_temperature, family = Gamma(), data = licor_avg_2)
-summary(gammaA)
+summary(gammaA) # 2.81e-05 ***
+anova(gammaA) # 2 df
 EP <- resid(gammaA, type = "pearson")
 ED <- resid(gammaA, type = "deviance")
 mu <- predict(gammaA, type = "response")
 E <- licor_avg_2$avg.A_2 - mu
-EP2 <- E / sqrt(0.2161906 * mu) # 0.235154 is the overdispersion parameter taken from the summary (as explained in subsection 9.9 from Zuur 2009)
+EP2 <- E / sqrt(0.2150349 * mu) # overdispersion parameter is taken from the summary (as explained in subsection 9.9 from Zuur 2009)
 op <- par(mfrow = c(2, 2))
 plot(x = mu, y = E, main = "Response residuals")
 plot(x = mu, y = EP, main = "Pearson residuals")
@@ -233,6 +236,7 @@ plot(x = mu, y = EP2, main = "Pearson residuals scaled")
 plot(x = mu, y = ED, main = "Deviance residuals")
 par(op) # no pattern
 dev.off()
+
 #plot without cooled/ control distinction
 gammaA_plot <- ggplot(licor_avg_2,
                       aes(x=soil_temperature,
@@ -242,12 +246,12 @@ gammaA_plot <- ggplot(licor_avg_2,
   ggtitle("Plot of CO2 assimilation by soil temperature") +
   xlab("Soil temperature") + ylab("Assimilation")+ theme_classic()
 
-
+library(ggplot2)
 final_plot_A <-ggplot(licor_avg_2, aes(x=soil_temperature)) + 
-  geom_point(aes(y = avg.A_2, colour = factor(batch), shape = treatment),na.rm = T, size=2.5) + 
-  stat_smooth(aes(y = avg.A_2, colour = factor(batch)), method = "glm", se = F, method.args = list(family = "Gamma"))+
+  geom_point(aes(y = avg.A_2, colour = as.factor(batch), shape = treatment),na.rm = T, size=2.5) + 
+  stat_smooth(aes(y = avg.A_2, colour = as.factor(batch)), method = "glm", se = F, method.args = list(family = "Gamma"))+
   scale_shape_discrete(breaks=c("control", "cooled"),labels=c("control trees", "cooled trees"))+
-  labs(x = "Soil temperature", y = bquote('Assimilation ('*mu~ 'mol' ~m^{"-2"} ~s^-1*')'), shape = "Treatment", colour = "Batch")+
+  labs(x = "Soil temperature (° C)", y = bquote('Assimilation ('*mu~ 'mol' ~m^{"-2"} ~s^-1*')'), shape = "Treatment", colour = "Batch")+
   scale_colour_viridis_d(
     name = waiver(),
     alpha = 1,
@@ -259,21 +263,21 @@ final_plot_A <-ggplot(licor_avg_2, aes(x=soil_temperature)) +
   guides(colour = guide_legend(override.aes = list(shape = NA)))+
   guides(shape = guide_legend(override.aes = list(size=2.5)))
 
-ggplot_build(final_plot_A)
+#library(ggplot2)
+#ggplot_build(final_plot_A)
+#install.packages("gridExtra")
+#library(gridExtra)
+#grid.arrange(gammaA_plot, gammaA_plot_1, nrow=1)
 
-install.packages("gridExtra")
-library(gridExtra)
-grid.arrange(gammaA_plot, gammaA_plot_1, nrow=1)
-
-# individual batches
+# individual batches - are these still ok?
 gammaA_b1 <- glm(avg.A_2[licor_avg_2$batch == "1"] ~ licor_avg_2$soil_temperature[licor_avg_2$batch == "1"], data=licor_avg_2, family=Gamma())
-summary(gammaA_b1)
+summary(gammaA_b1) # 0.01
 
 gammaA_b2 <- glm(avg.A_2[licor_avg_2$batch == "2"] ~ licor_avg_2$soil_temperature[licor_avg_2$batch == "2"], data=licor_avg_2, family=Gamma())
-summary(gammaA_b2)
+summary(gammaA_b2) # 0.01
 
 gammaA_b4 <- glm(avg.A_2[licor_avg_2$batch == "4"] ~ licor_avg_2$soil_temperature[licor_avg_2$batch == "4"], data=licor_avg_2, family=Gamma())
-summary(gammaA_b4)
+summary(gammaA_b4) # 0.009
 
 #E - significant
 
@@ -285,20 +289,13 @@ citation("mgcv")
 #gamE2 <- gam(licor_avg_2$avg.E_2 ~ s(licor_avg_2$soil_temperature, fx = FALSE, k=3, bs = "cr") + s(licor_avg_2$batch, fx = FALSE, k=3, bs = "cr"))
 gamE <- gam(licor_avg_2$avg.E_2 ~ s(licor_avg_2$soil_temperature, k=3, bs = "cs") + s(licor_avg_2$batch, k=3, bs = "cs"))
 summary(gamE)
+anova(gamE)
 
-#1
-#op <- par(mfrow = c(2, 2))
-#plot(gamE2, add.smooth = FALSE)
-#par(op)
-
-#2
-#drop1(gamE2, test = "F")
-#op <- par(mfrow = c(1, 2))
-#plot(resid(gamE2) ~ licor_avg_2$soil_temperature, xlab = "E", ylab = "Residuals")
-#plot(resid(gamE2) ~ licor_avg_2$avg.E_2,
-  #   xlab = "E", ylab = "Residuals")
-#par(op)
-
+#example (delete)
+gam(y ~ user_id + s(speed, by = user_id) +
+      s(length, by = user_id) +
+      s(price, by = user_id),
+    data1, method = "REML")
 
 # 3
 #gam.check(gamE2) # just 1 plot
@@ -309,32 +306,15 @@ library(mgcViz)
 gamE <- getViz(gamE)
 check(gamE) # 4 plots! pattern in 3rd plot; 4th should be a straight line: ok
 
-#loess
-library(gam)
-loessE <- gam(licor_avg_2$avg.E_2 ~ lo(licor_avg_2$soil_temperature, span = 0.5) + lo(licor_avg_2$batch, span = 0.5))
-summary(loessE)
-plot(loessE, se = TRUE)
-loessE <- predict(loessE, se=TRUE)
-plot(licor_avg_2$soil_temperature, licor_avg_2$avg.E_2, type = "p")
-I1 <- order(licor_avg_2$soil_temperature)
-lines(licor_avg_2$soil_temperature[I1], loessE$fit[I1], lty = 1)
-lines(licor_avg_2$soil_temperature[I1], loessE$fit[I1] + 2 * loessE$se[I1], lty = 2)
-lines(licor_avg_2$soil_temperature[I1], loessE$fit[I1] - 2 * loessE$se[I1], lty = 2)
-par(op)
-
-
-#plot with loess
-gamE_plot <- ggplot(licor_avg_2,
-                    aes(x=soil_temperature,
-                        y=avg.E_2,
-                        color=treatment))+
-  geom_point(na.rm=T)+
-  geom_smooth(method = "loess",se=F,na.rm = T)+
-  ggtitle("Plot of CO2 evapotranspiration by soil temperature") +
-  xlab("Soil temperature") + ylab("Evapotranspiration")
+# alternate version
+gamE_ <- gam(licor_avg_2$avg.E_2 ~ licor_avg_2$batch + s(licor_avg_2$soil_temperature, by=licor_avg_2$batch))
+summary(gamE_)
+anova(gamE_)
+# validation does not work anymore
+gamE_ <- getViz(gamE_)
+check(gamE_) # 7.65e-06 ***; 3.46e-05 ***; 0.0029 ** 
 
 #plot with mgcv
-library(mgcv)
 
 #without cooled/ control distinction
 gamE_plot_1 <- ggplot(licor_avg_2,
@@ -349,7 +329,7 @@ final_plot_E <-ggplot(licor_avg_2, aes(x=soil_temperature)) +
   geom_point(aes(y = avg.E_2, colour = factor(batch), shape = treatment),na.rm = T, size=2.5) + 
   stat_smooth(aes(y = avg.E_2, colour = factor(batch)), method = "gam", formula = y ~ s(x, bs = "cs"), se = F, na.rm = T)+
   scale_shape_discrete(breaks=c("control", "cooled"),labels=c("control trees", "cooled trees"))+
-  labs(x = "Soil temperature", y = bquote('Evapotranspiration ('*'mol' ~m^{"-2"} ~s^-1*')'), shape = "Treatment", colour = "Batch")+
+  labs(x = "Soil temperature (° C)", y = bquote('Evapotranspiration ('*'mol' ~m^{"-2"} ~s^-1*')'), shape = "Treatment", colour = "Batch")+
   scale_colour_viridis_d(
     name = waiver(),
     alpha = 1,
@@ -364,7 +344,7 @@ final_plot_E <-ggplot(licor_avg_2, aes(x=soil_temperature)) +
 # individual batches
 library(mgcv)
 gamE_b1 <- gam(licor_avg_2$avg.E_2[licor_avg_2$batch == "1"] ~  s(licor_avg_2$soil_temperature[licor_avg_2$batch == "1"], k=3, bs = "cs"))
-summary(gamE_b1)
+summary(gamE_b1) # 
 
 gamE_b2 <- gam(licor_avg_2$avg.E_2[licor_avg_2$batch == "2"] ~  s(licor_avg_2$soil_temperature[licor_avg_2$batch == "2"], k=3, bs = "cs"))
 summary(gamE_b2)
@@ -382,19 +362,15 @@ summary(gamgsw)
 gamgsw2 <- getViz(gamgsw2)
 check(gamgsw2)
 
+# alternative version with batch as factor
+gamgsw_ <- gam(licor_avg_2$avg.gsw_2 ~ licor_avg_2$batch + s(licor_avg_2$soil_temperature, by=licor_avg_2$batch))
+summary(gamgsw_) # 3.51e-07 ***; 3.76e-06 ***; 0.000799 ***
+gamgsw_ <- getViz(gamgsw_)
+check(gamgsw_)
+
 scatter_plotgsw <- ggplot(licor_avg_2,
                           aes(x=soil_temperature,
                               y=avg.gsw_2))+ geom_point(na.rm=T)
-
-# plot with loess
-gamgsw_plot <- ggplot(licor_avg_2,
-                      aes(x=soil_temperature,
-                          y=avg.gsw_2,
-                          color=treatment))+
-  geom_point(na.rm=T)+
-  geom_smooth(method = "loess",se=F,na.rm = T)+
-  ggtitle("Plot of stomatal conductance by soil temperature") +
-  xlab("Soil temperature") + ylab("Stomatal conductance")
 
 # plot with mgcv
 
@@ -412,7 +388,7 @@ final_plot_gsw <-ggplot(licor_avg_2, aes(x=soil_temperature)) +
   geom_point(aes(y = avg.gsw_2, colour = factor(batch), shape = treatment),na.rm = T, size=2.5) + 
   stat_smooth(aes(y = avg.gsw_2, colour = factor(batch)), method = "gam", formula = y ~ s(x, bs = "cs"),na.rm = T, se = FALSE)+
   scale_shape_discrete(breaks=c("control", "cooled"),labels=c("control trees", "cooled trees"))+
-  labs(x = "Soil temperature", y = bquote('Stomatal conductance ('*'mol' ~m^{"-2"} ~s^-1*')'), shape = "Treatment", colour = "Batch")+
+  labs(x = "Soil temperature (° C)", y = bquote('Stomatal conductance ('*'mol' ~m^{"-2"} ~s^-1*')'), shape = "Treatment", colour = "Batch")+
   scale_colour_viridis_d(
     name = waiver(),
     alpha = 1,
@@ -436,14 +412,14 @@ summary(gamgsw_b4)
 
 #A/Ci - significant
 gammaA.Ci <- glm(formula = licor_avg_2$avg.A.Ci_2 ~ licor_avg_2$batch + licor_avg_2$soil_temperature, family = Gamma(), data = licor_avg_2)
-summary(gammaA.Ci)
+summary(gammaA.Ci) #0.03847 *
 EP <- resid(gammaA.Ci, type = "pearson")
 ED <- resid(gammaA.Ci, type = "deviance")
 mu <- predict(gammaA.Ci, type = "response")
-E_ <- licor_avg_2$avg.A.Ci_2 - muA
-EP2 <- E_A / sqrt(0.1549391 * muA)
+E_A.Ci <- licor_avg_2$avg.A.Ci_2 - mu
+EP2 <- E_A.Ci / sqrt(0.1589045 * mu)
 op <- par(mfrow = c(2, 2))
-plot(x = mu, y = E_, main = "Response residuals")
+plot(x = mu, y = E_A.Ci, main = "Response residuals")
 plot(x = mu, y = EP, main = "Pearson residuals")
 plot(x = mu, y = EP2, main = "Pearson residuals scaled")
 plot(x = mu, y = ED, main = "Deviance residuals")
@@ -453,7 +429,7 @@ final_plot_A.Ci <-ggplot(licor_avg_2, aes(x=soil_temperature)) +
   geom_point(aes(y = avg.A.Ci_2, colour = factor(batch), shape = treatment),na.rm = T, size=2.5) + 
   stat_smooth(aes(y = avg.A.Ci_2, colour = factor(batch)), method = "glm", se = F, method.args = list(family = "Gamma"), na.rm = T)+
   scale_shape_discrete(breaks=c("control", "cooled"),labels=c("control trees", "cooled trees"))+
-  labs(x = "Soil temperature", y = bquote('A/Ci ('*mol ~m^{"-2"} ~s^-1*')'), shape = "Treatment", colour = "Batch")+
+  labs(x = "Soil temperature (° C)", y = bquote('A/Ci ('*mol ~m^{"-2"} ~s^-1*')'), shape = "Treatment", colour = "Batch")+
   scale_colour_viridis_d(
     name = waiver(),
     alpha = 1,
@@ -512,6 +488,7 @@ licor_avg_3$water_potential <- licor_avg_3$water_potential *(-1)
 #cut this!
 licor_avg_3$water_potential <- c(13.06, 13.56, 11.58, 13.02, 10.07, 10.55, 9.03, 9.55, 11.03, 10.54, 6.55, 7.08, 7.53, 7.52, 8.05, 7.59, 8.55, 9.02, 8.52, 8.50, 10.05, 12.00, 9.03, 7.51, 7.55, 8.56, 9.05, 10.06, 10.03)
 licor_avg_3$water_potential_2 <- c(13.06, 13.56, 11.58, 13.02, 10.07, 10.55, 9.03, 9.55, 11.03, 10.54, 6.55, 7.08, 7.53, 7.52, 8.05, 7.59, 8.55, 9.02, 8.52, 8.50, 10.05, 12.00, 9.03, 7.51, 7.09, 7.05, 7.55, 8.56, 9.05, 10.06, 10.03)
+
 View(licor_avg_3)
 
 # GAS EXCHANGE VS WATER POTENTIAL
@@ -520,12 +497,13 @@ View(licor_avg_3)
 
 #A - significant
 gammaA2 <- glm(licor_avg_3$avg.A_2 ~ licor_avg_3$batch + licor_avg_3$water_potential, data=licor_avg_3, family=Gamma())
-summary(gammaA2)
+summary(gammaA2) # 0.004673 **
+anova(gammaA2)
 EP <- resid(gammaA2, type = "pearson")
 ED <- resid(gammaA2, type = "deviance")
 mu <- predict(gammaA2, type = "response")
 E_ <- licor_avg_3$avg.A_2 - mu
-EP2 <- E_ / sqrt(0.2413812 * mu)  
+EP2 <- E_ / sqrt(0.2461634 * mu)  
 op <- par(mfrow = c(2, 2))
 plot(x = mu, y = E_, main = "Response residuals")
 plot(x = mu, y = EP, main = "Pearson residuals")
@@ -533,12 +511,29 @@ plot(x = mu, y = EP2, main = "Pearson residuals scaled")
 plot(x = mu, y = ED, main = "Deviance residuals")
 par(op)
 
-# just controls
-gammaA2 <- glm(avg.A_2[licor_avg_3$treatment == "control"] ~ licor_avg_3$batch[licor_avg_3$treatment == "control"] + licor_avg_3$water_potential[licor_avg_3$treatment == "control"], data=licor_avg_3, family=Gamma())
-summary(gammaA2)
+#individual batches
+gammaA2 <- glm(licor_avg_3$avg.A_2[licor_avg_3$batch == "1"] ~ licor_avg_3$water_potential[licor_avg_3$batch == "1"], data=licor_avg_3, family=Gamma())
+summary(gammaA2) # not sign (nessuno dei 3)
+# 0.0727 . for batch 1
+
+# just controls - sign
+licor_avg_5 <- subset(licor_avg_3, licor_avg_3$treatment != "cooled") 
+View(licor_avg_5)
+
+gammaA2 <- glm(avg.A_2 ~ licor_avg_5$batch + licor_avg_5$water_potential, data=licor_avg_5, family=Gamma())
+summary(gammaA2) #0.041319 * 
+
+# each batch - not sign
+gammaA2_1 <- glm(avg.A_2[licor_avg_5$batch == "1"] ~ water_potential[licor_avg_5$batch == "1"], data=licor_avg_5, family=Gamma())
+summary(gammaA2_1) # 0.202
+
+gammaA2_1 <- glm(avg.A_2[licor_avg_5$batch == "2"] ~ water_potential[licor_avg_5$batch == "2"], data=licor_avg_5, family=Gamma())
+summary(gammaA2_1) #0.28980
+
 
 #plot
-gamma_A2_plot <- ggplot(licor_avg_3,
+
+plot_A2 <- ggplot(licor_avg_3,
                        aes(x=water_potential,
                            y=avg.A_2))+
   geom_point()+
@@ -555,7 +550,6 @@ gamma_A2_plot <- ggplot(licor_avg_3,
     aesthetics = "colour")+theme_classic()+
   guides(colour = guide_legend(override.aes = list(shape = NA)))
 
-
 # batch 
 gammaA_batch_2 <- ggplot(licor_avg_3,
                          aes(x=water_potential,
@@ -565,7 +559,8 @@ gammaA_batch_2 <- ggplot(licor_avg_3,
   geom_smooth(method = "glm", se = F, method.args = list(family = "Gamma"))+
   ggtitle("Plot of CO2 assimilation by water potential") +
   xlab("Water potential") + ylab("Assimilation")
-
+# regression driven by batches (batch 1 very high, batch 4 very low)
+# symbols for both batch and treatment (3x2)
 
 final_plot_Aw <-ggplot(licor_avg_3, aes(x=water_potential)) + 
   geom_point(aes(y = avg.A_2, colour = treatment)) + 
@@ -581,7 +576,6 @@ final_plot_Aw <-ggplot(licor_avg_3, aes(x=water_potential)) +
     aesthetics = "colour")+theme_classic()+
   guides(colour = guide_legend(override.aes = list(shape = NA))) # plot cooled and control trees separately + merge batches
 
-
 # E - significant 
 #gamEw2 <- gam(licor_avg_3$avg.E_2 ~ s(licor_avg_3$water_potential, fx = FALSE, k=-1, bs = "cr"))
 gamEw <- gam(licor_avg_3$avg.E_2 ~ s(licor_avg_3$batch, k=3, bs = "cs") + s(licor_avg_3$water_potential, k=3, bs = "cs"))
@@ -589,14 +583,28 @@ summary(gamEw)
 gamEw <- getViz(gamEw)
 check(gamEw)
 
+# alternative version for batch as factor
+gamEw <- gam(licor_avg_3$avg.E_2 ~ licor_avg_3$batch + s(licor_avg_3$water_potential, by=licor_avg_3$batch))
+summary(gamEw)
+
 # just controls
-gamEw <- gam(licor_avg_3$avg.E_2[licor_avg_3$treatment == "control"] ~ s(licor_avg_3$batch[licor_avg_3$treatment == "control"], k=3, bs = "cs") + s(licor_avg_3$water_potential[licor_avg_3$treatment == "control"], k=3, bs = "cs"))
+gamEw <- gam(licor_avg_3$avg.E_2[licor_avg_3$treatment == "control"] ~ licor_avg_3$batch[licor_avg_3$treatment == "control"] + s(licor_avg_3$water_potential[licor_avg_3$treatment == "control"], by=licor_avg_3$batch))
 summary(gamEw)
 
 # scatter plot with E and water potential 
 scatter_plotE2 <- ggplot(licor_avg_3,
                          aes(x=water_potential,
                              y=avg.E_2))+ geom_point(na.rm=T)
+
+gammaE_batch_2 <- ggplot(licor_avg_3,
+                         aes(x=water_potential,
+                             y=avg.E_2,
+                             color=factor(batch)))+
+  geom_point()+
+  geom_smooth(method = "gam", formula = y ~ s(x, bs = "cs"), se = F, na.rm = T)+
+  ggtitle("Plot of E by water potential") +
+  xlab("Water potential") + ylab("E")
+
 
 final_plot_Ew <-ggplot(licor_avg_3, aes(x=water_potential)) + 
   geom_point(aes(y = avg.E_2, colour = treatment)) + 
@@ -618,14 +626,16 @@ summary(gamgsww)
 gamgsww <- getViz(gamgsww)
 check(gamgsww)
 
+gamgsww <- gam(licor_avg_3$avg.gsw_2 ~ licor_avg_3$batch + s(licor_avg_3$water_potential, by=licor_avg_3$batch))
+summary(gamgsww)
+
 # just controls
-gamgsww <- gam(licor_avg_3$avg.gsw_2[licor_avg_3$treatment == "control"] ~ s(licor_avg_3$batch[licor_avg_3$treatment == "control"], k=3, bs = "cs") + s(licor_avg_3$water_potential[licor_avg_3$treatment == "control"], k=3, bs = "cs"))
+gamgsww <- gam(licor_avg_3$avg.gsw_2[licor_avg_3$treatment == "control"] ~ licor_avg_3$batch[licor_avg_3$treatment == "control"] + s(licor_avg_3$water_potential[licor_avg_3$treatment == "control"]))
 summary(gamgsww)
 
 scatter_plotgsw2 <- ggplot(licor_avg_3,
                            aes(x=water_potential,
                                y=avg.gsw_2))+ geom_point(na.rm=T)
-
 
 
 final_plot_gsww <-ggplot(licor_avg_3, aes(x=water_potential)) + 
@@ -645,7 +655,8 @@ final_plot_gsww <-ggplot(licor_avg_3, aes(x=water_potential)) +
 
 #A/Ci - not significant
 gammaA.Ci2 <- glm(licor_avg_3$avg.A.Ci_2 ~ licor_avg_3$batch + licor_avg_3$water_potential, data=licor_avg_3, family=Gamma())
-summary(gammaA.Ci2)
+summary(gammaA.Ci2) # 0.25387  
+anova(gammaA.Ci2) # 2 df
 EP <- resid(gammaA.Ci2, type = "pearson")
 ED <- resid(gammaA.Ci2, type = "deviance")
 mu <- predict(gammaA.Ci2, type = "response")
@@ -659,13 +670,11 @@ plot(x = mu, y = ED, main = "Deviance residuals") # relabel
 par(op)
 
 # just controls
-licor_avg_control <- subset(licor_avg_3, licor_avg_3$treatment == "control") 
-
-gammaA.Ci2 <- glm(avg.A.Ci_2 ~ licor_avg_control$batch + licor_avg_control$water_potential, data=licor_avg_control, family=Gamma())
+gammaA.Ci2 <- glm(avg.A.Ci_2 ~ licor_avg_5$batch + licor_avg_5$water_potential, data=licor_avg_5, family=Gamma())
 summary(gammaA.Ci2) # significant (batch and w pot)
 
 # batch 1
-gammaA.Ci2 <- glm(avg.A.Ci_2[licor_avg_control$batch == "1"] ~ licor_avg_control$water_potential[licor_avg_control$batch == "1"], data=licor_avg_control, family=Gamma())
+gammaA.Ci2 <- glm(avg.A.Ci_2[licor_avg_5$batch == "1"] ~ licor_avg_5$water_potential[licor_avg_5$batch == "1"], data=licor_avg_5, family=Gamma())
 summary(gammaA.Ci2) # not sign
 
 gammaA.Ci2_plot <- ggplot(licor_avg_3,
@@ -713,9 +722,10 @@ hist(licor_avg_3$water_potential,
      breaks=8,
      main= "Histogram for water potential")
 
+
 # gamma distribution - not significant
 gamma_wpot <- glm(licor_avg_3$soil_temperature ~ licor_avg_3$water_potential, data=licor_avg_3, family=Gamma())
-summary(gamma_wpot) 
+summary(gamma_wpot) # 0.4462
 EP <- resid(gamma_wpot, type = "pearson")
 ED <- resid(gamma_wpot, type = "deviance")
 mu <- predict(gamma_wpot, type = "response")
@@ -728,6 +738,33 @@ plot(x = mu, y = EP2, main = "Pearson residuals scaled")
 plot(x = mu, y = ED, main = "Deviance residuals")
 par(op)
 
+final_plot_temp_wat <-ggplot(licor_avg_3, aes(x=soil_temperature)) + 
+  geom_point(aes(y = water_potential, colour = treatment)) + 
+  stat_smooth(aes(y = water_potential, colour = treatment), method = "glm", se = F, method.args = list(family = "Gamma"))+
+  labs(x = "Soil temperature (° C)", y = 'Water potential (bars)', colour = "Treatment")+
+  scale_colour_viridis_d(
+    name = waiver(),
+    alpha = 1,
+    begin = 0,
+    end = 1,
+    direction = 1,
+    option = "D",
+    aesthetics = "colour")+theme_classic()+
+  guides(colour = guide_legend(override.aes = list(shape = NA)))
+
+final_plot_temp_wat <-ggplot(licor_avg_3, aes(x=soil_temperature)) + 
+  geom_point(aes(y = water_potential, colour = factor(batch), shape = treatment),na.rm = T, size=2.5) + 
+  scale_shape_discrete(breaks=c("control", "cooled"),labels=c("control trees", "cooled trees"))+
+  labs(x = "Soil temperature (° C)", y = 'Water potential (bars)', shape = "Treatment", colour = "Batch")+
+  scale_colour_viridis_d(
+    name = waiver(),
+    alpha = 1,
+    begin = 0,
+    end = 1,
+    direction = 1,
+    option = "D",
+    aesthetics = "colour")+ theme_classic()+
+  guides(shape = guide_legend(override.aes = list(size=2.5))) # delete batch as well?
 
 gamma_interaction <- glm(licor_avg_3$avg.A_2 ~ licor_avg_3$soil_temperature*licor_avg_3$water_potential + licor_avg_3$batch, data=licor_avg_3, family=Gamma())
 summary(gamma_interaction)
