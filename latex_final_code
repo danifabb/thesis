@@ -1,0 +1,1307 @@
+\documentclass[a4paper, 12pt, twoside]{article}
+\usepackage[a4paper, left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx} 
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{natbib}
+\usepackage{newtxtext,newtxmath}
+\usepackage{mathtools}
+\usepackage{float}
+\usepackage{newlfont}
+\usepackage{anyfontsize}
+\usepackage{caption}
+
+\captionsetup{font=small, labelfont=bf} 
+
+
+\begin{document}
+
+\begin{titlepage}
+%
+%
+% ONCE YOU ARE FINISHED WITH YOUR CHANGES MODIFY "RED" WITH "BLACK" IN ALL \textcolor COMMENTS
+%
+%
+\begin{center}
+{{\LARGE{\textsc{Alma Mater Studiorum $\cdot$ Università di  Bologna}}}} 
+\rule[0.1cm]{15.8cm}{0.1mm}
+\rule[0.5cm]{15.8cm}{0.6mm}
+\\\vspace{3mm}
+{\large{\bf Dipartimento di Scienze Biologiche, Geologiche e Ambientali\\
+\vspace{5mm}
+Laurea Magistrale in Scienze e gestione della natura}}
+\end{center}
+
+\vspace{23mm}
+
+\begin{center}\textcolor{black}{
+%
+% INSERT THE TITLE OF YOUR THESIS
+%
+{\LARGE{\bf Sink limitation by soil cooling reduces \textit{Betula pendula} leaf gas exchange}}\\
+}\end{center}
+
+\vspace{50mm} \par \noindent
+
+\begin{minipage}[t]{0.47\textwidth}
+%
+% INSERT THE NAME OF THE SUPERVISOR WITH ITS TITLE (DR. OR PROF.)
+%
+{\large{\textbf{Relatore:} \vspace{2mm}\\\textcolor{black}{Prof. Mirko Zaffagnini}\\\\
+%
+% INSERT THE NAME OF THE CO-SUPERVISOR WITH ITS TITLE (DR. OR PROF.)
+%
+% IF THERE ARE NO CO-SUPERVISORS REMOVE THE FOLLOWING 5 LINES
+%
+\textcolor{black}{
+\textbf{Correlatori:} 
+\vspace{2mm}\\
+Dott. Yann Salmon, 
+\vspace{2mm}\\
+Xin Zhuang}\\\\}}
+\end{minipage}
+%
+\hfill
+%
+\begin{minipage}[t]{0.47\textwidth}\raggedleft \textcolor{black}{
+{\large{\textbf{Presentata da:}
+\vspace{2mm}\\
+%
+% INSERT THE NAME OF THE GRADUAND
+%
+\textcolor{black}{Daniela Fabbri}}}
+}
+\end{minipage}
+
+\vspace{40mm}
+
+\begin{center}
+%
+% INSERT THE ACADEMIC YEAR
+%
+\rule[0.1cm]{15.8cm}{0.1mm}
+\LARGE{\textbf{Anno Accademico \textcolor{black}{2023/2024}}}
+\end{center}
+
+\end{titlepage}
+
+\cleardoublepage
+
+\section*{\centering{Acknowledgements}}
+\setstretch{1.5}
+\fontsize{12}{13.5}\selectfont
+
+Firstly, I would like to thank my supervisor Dr. Yann Salmon and my co-supervisor Ms. Xin Zhuang for their guidance, constant support and patience both during my traineeship and the writing process. Working with the INAR research group at the University of Helsinki was an invaluable experience for me. I am also grateful to my internal supervisor Prof. Mirko Zaffagnini for his help during the writing of this thesis. Thanks should also go to Dr. Teemu Paljakka for all his help and advice during my traineeship. 
+\smallskip
+
+Lastly, I'd like to mention my family, especially my parents, and my friends Gelli and Michelle for their moral support and encouragement throughout my studies. 
+
+
+\cleardoublepage
+
+\section*{\centering{Abstract}}
+\setstretch{1.5}
+\fontsize{12}{13.5}\selectfont
+
+Coordination between carbon source and sink organs in trees is important to ensure that enough carbon gets assimilated by the source (leaves) and that photosynthates are efficiently used by the plant, either being transported to the sink organs, or kept in the source as energy reserve. When sink demand is reduced, photosynthetic activity in the leaves and phloem transport rate decrease as well, due to feedback mechanisms. The experiment presented in this thesis aimed at investigating this phenomenon in \textit{Betula pendula} trees with a soil cooling treatment, which has been rarely used in previous experiments on the topic. 
+\smallskip
+
+Sink strength was reduced by cooling the soil around the roots of saplings down to 4 °C: 12 saplings in a greenhouse environment received the treatment, while eight saplings were used as controls. Although it is a part of a larger experiment with a wider scope, the data analyzed here aims at describing the effect of soil temperature on four gas exchange variables: $CO_2$ net assimilation (\textit{A}), water evapotranspiration (\textit{E}), stomatal conductance (\textit{gsw}) and photosynthetic efficiency (\textit{A/$C_i$}). Gas exchange variables were found to be significantly different between control trees and cooled trees for three variables (\textit{A}, \textit{E} and \textit{gsw}), with cooled trees having lower source activity. \textit{A/$C_i$} not being significantly affected suggests a minor role of non-stomatal limitation in the decrease of photosynthetic rate. 
+\smallskip 
+
+This thesis also investigates the possible confounding effect caused by changes in the plant water status after the soil cooling treatment, as measured by water potential. However, in our experiment water potential values were not significantly affected by soil temperature, and did not significantly impact the gas exchange variables. Hence, the sink limitation seems to be the main driver of decreased source activity.
+
+\cleardoublepage
+
+\setstretch{1.5}
+\tableofcontents
+
+\cleardoublepage
+
+\section{Introduction} \label{sec:intro}
+
+Carbon and water fluxes in plants are tightly coupled: during photosynthesis a lot of water is lost for a small carbon gain. Furthermore, transport of photosynthates also requires water. Finally, growth requires water to create turgor for cell expansion and carbon for building the cell elements. Hence, 
+connections and feedbacks between different tissues and organs are important for plants to maintain sufficient carbon assimilation and an efficient utilization of photosynthates, without losing an excessive amount of water. Because leaves and carbon sinks are connected through the phloem and the xylem, changes that start from one tissue can easily be propagated to other tissues in the same tree \citep{Hölttä_et_al._2017}. 
+\smallskip
+
+This introduction will explore the connection between source and sink organs through phloem transport and, in particular, how gas exchange variables in the leaves, such as the rate of photosynthesis and stomatal conductance, can be affected by changes in carbon sink activity in the roots. 
+\smallskip 
+
+The connection between leaves and roots through xylem transport will also be examined, with the same gas exchange variables being impacted by changes in water potential in the roots \citep{Hölttä_et_al._2017}.  
+
+\subsection{Photosynthesis}
+
+Photosynthesis is the basis of the ecosystem food chain and “the ultimate source of all of humankind’s food and oxygen” \citep{Johnson_M._P._2016}. Oxygenic photosynthesis is a process that allows certain organisms, including plants, to harvest solar energy to synthesize organic carbon compounds, starting from carbon dioxide and water and generating oxygen as well \citep{Arnon_D._I._1971}: 
+
+\begin{equation}
+   6H_2O + 6CO_2 + light \rightarrow C_6H_{12}O_6 + 6O_2
+    \label{eq:photosynthesis}
+\end{equation}
+
+The description of photosynthesis below focuses on C3 plants, which are common in temperate and boreal regions and which were studied in this thesis. C4 and CAM plants exhibit some variations compared to C3 due to differences in anatomy and biochemical reactions.
+\smallskip
+
+Photosynthesis mostly takes place in the leaves. Figure \ref{fig:leaf} shows the typical anatomy of a leaf. Different cell types in the leaf contribute to the photosynthetic process: 
+$CO_2$ entry is controlled by stomata in the lower epidermis, photosynthetic parenchyma (mesophyll) cells contain many chloroplasts and are the principal center of photosynthesis, whereas vascular tissues transport the sap with the necessary compounds into the leaves (xylem), or towards the rest of the plant (phloem) \citep{Mauseth_2006}. 
+\smallskip
+
+\begin{figure}[htp]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/leaf.jpg}
+    \caption{Representation of the cross-section of a leaf. A waxy cuticle and an epidermal tissue are present on its upper and lower surface. More internally, the leaf contains two types of mesophyll (palisade parenchyma and spongy parenchyma), which contain chloroplasts, and transport tissues (xylem and phloem) in the vascular bundle. Figure from \citet{Diah_S._Z._M._et_al._2014}.}
+    \label{fig:leaf}
+\end{figure}
+
+The site of photosynthesis in the cell is the chloroplast, an organelle with two outer membranes and one thylakoid membrane (Figure \ref{fig:chlor}). The thylakoid membrane divides the chloroplast into two spaces: the stroma on the outside and the lumen on the inside. 
+\smallskip
+
+In plants, photosynthesis can be divided into two phases: 
+
+\begin{itemize}
+
+\item A first light-dependent phase that happens in the thylakoid membrane. It results in the production of adenosine triphosphate  (ATP) and reduced nicotinamide adenine dinucleotide phosphate (NADPH). The energy of light is thus converted into chemical energy.
+
+\item A second metabolic phase that happens in the stroma. Here, ATP (high-energy compound) and NADPH (high reducing power) are used by the enzymes of the Calvin-Benson cycle and $CO_2$ gets reduced and fixed into carbohydrates \citep{Johnson_M._P._2016}. ATP and NADPH provide the 479 kJ that are necessary for photosynthesis to occur, as it is an endergonic process \citep{Antal_et_al._2013}. 
+
+\end{itemize}
+
+\begin{figure}[htp]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.6\textwidth]{images/chloropl.png}
+    \caption{Image of a chloroplast from a leaf of Phleum pratense, taken with an electron microscope. A system of thylakoid membranes divides a space called lumen from the external stroma. Thylakoid membranes are the site of the electron transport chain (light phase of photosynthesis). Figure from \citet{Taiz_and_Zeiger_2002}.}.
+    \label{fig:chlor}
+\end{figure}
+
+The first phase of photosynthesis requires pigments, which in plant cells are mainly two molecules with a ring structure, chlorophyll \textit{a} and \textit{b} \citep{Queiroz_et_al._2017}. When chlorophyll absorbs photons at certain wavelengths - mostly the blue (425–450 nm) and red parts (600–700 nm) of the visible spectrum -, it reaches an excited, unstable state {that cannot be maintained for long}. As the excited molecule goes back to its ground state, the extra energy can be disposed of through energy transfer to a neighboring molecule, which in turn becomes excited \citep{Rascio_2017}. This is the process that happens in photosystems I and II, two complexes that can be found in the thylakoid membrane. They are formed by hundreds of pigment molecules that collect and transfer energy to a reaction center, called P680 in photosystem I and P700 in Photosystem II. Two specific chlorophyll molecules in the reaction center behave differently than other pigments in the complex: instead of transferring energy, one of them undergoes oxidation, transferring an electron to the other and thus making a redox chain possible \citep{Johnson_M._P._2016}. 
+\smallskip
+
+The redox chain (Figure \ref{fig:light}) involves a series of molecules that are present in the thylakoid membrane, ending with ferredoxin/ NADP+ reductase (FNR). This pathway is unidirectional, as electrons are transferred from stronger reductants to weaker ones \citep{Arnon_D._I._1971}. As a result of the electron chain, NAPD+ is reduced to NADPH, whereas water reduces the oxidized P680 back to its former state and is therefore converted to oxygen. The electron chain also causes proton transport across the membrane, with an accumulation of protons in the lumen. This gradient is used by the ATP synthase to generate ATP through phosphorylation \citep{Hill_R._and_Bendall_F._1960, Johnson_M._P._2016}. 
+
+\begin{figure}[htp]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/light_phase.png}
+    \caption{Electron transport chain in the thylakoid membrane, with photosystem II, cythocrome $b_6f$, photosystem I, ferredoxin and FNR. The proton gradient produced by the pathway is used by ATP synthase (phosphorylation). Image from \citet{Johnson_M._P._2016}.}
+    \label{fig:light}
+\end{figure}
+
+After the light-dependent reactions, there is a metabolic phase: $CO_2$ is fixed into organic compounds during the Calvin-Benson cycle, which is made up of 13 reactions (Figure \ref{fig:calvin}). Primary $CO_2$ assimilation is catalyzed by the enzyme RuBisCO (ribulose-1,5-bisphosphate carboxylase/ oxygenase), when the sugar ribulose-1,5-bisphosphate undergoes carboxylation. The first three reactions lead to the formation of two molecules of a triose phosphate called glyceraldehyde-3-phosphate (G3P), thanks to the previously produced ATP and NADPH, which provide energy and reducing power. The other ten reactions aim at regenerating RuBP so that it can be used in the next cycle \citep{Biel_K._and_Fomina_I._2015}. In total, the cycle uses 3 molecules of ATP and 2 of NADPH to assimilate one $CO_2$ molecule \citep{Rascio_2017}. 
+\smallskip
+
+When three $CO_2$ are fixed into six G3P molecules, five of these molecules become a part of the cycle again, by being regenerated into RuBP; the sixth molecule can follow two different paths. It can exit the chloroplast and be converted into fructose-6P and then, after several reactions, into sucrose, or it can remain in the chloroplast and be converted into starch \citep{Johnson_M._P._2016}). 
+
+
+\begin{figure}[hp]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.4\textwidth]{images/calvin_cycle.jpg}
+    \caption{The 13 reactions of the Calvin cycle. Figure from \citet{Sun_et_al._2003}.}
+    \label{fig:calvin}
+\end{figure}
+ 
+
+\subsection{Water potential and xylem transport}
+Sap (water and minerals) is absorbed by the roots and then travels inside a vascular tissue, the xylem, throughout the root system, the stem and the leaves. In Angiosperms, the xylem is constituted by dead, elongated cells that belong to two different categories, tracheids and vessel elements. Both have lignified secondary walls and are stacked on top of one another, but vessel elements have perforated cross walls, forming a continuous tube \citep{Venturas_M._D._et_al._2017}. 
+\smallskip
+
+% xylem image?
+The concept of water potential, which is defined as a "measure of the free energy of water per unit volume (J $m^{-3}$)" relative to pure water in reference conditions \citep{Taiz_and_Zeiger_2002}, is fundamental to explain sap transport inside the plant. Water potential can be described by equation \ref{eq:water}:
+
+\begin{equation}
+ \psi_{H_{2}O} = \mu_{H_2O}/V_{H_2O},  
+ \label{eq:water}
+\end{equation}
+
+where $\mu$ is the chemical potential of water and $V_{H_2O}$ is its molar volume \citep{Rascio_2017}. It is made up of different components, which can be summarized by equation \ref{eq:potential}:
+
+\begin{equation}
+    \Psi_{H_2O} = \Psi_s + \Psi_p + \Psi_g
+    \label{eq:potential}
+\end{equation}
+
+$\Psi_g$ is the gravity component, which has a minor role in small plants. $\Psi_p$ is the hydrostatic pressure: when it is positive, this pressure causes $\Psi_{H_2O}$ to become less negative. Osmotic potential ($\Psi_s$) describes the effect of solutes on $\Psi_{H_2O}$. It becomes more negative as solutes accumulate in a plant cell, causing the water potential to also become more negative. Water moves from higher to lower values  when a water potential gradient ($\Delta\Psi_{H_2O}$) is present \citep{Taiz_and_Zeiger_2002}. 
+\smallskip
+
+The roots can contribute directly to water uptake by generating a $\Delta\Psi_{H_2O}$ between soil and root, which is caused by an osmotic gradient. As ions accumulate in the xylem, $\Psi_{H_2O}$ decreases, allowing water to flow in \citep{Gambetta_G.A._et_al._2017}. 
+
+The main force  that drives sap transport, however, is the water potential gradient ($\Delta\Psi_p$) between leaves and roots, as the cohesion-tension theory claims. According to this theory, water in the xylem behaves like a cohesive, unbroken column that can ascend from roots to leaves because it is driven by evaporation happening inside pores of leaf cell walls. Because of the hydrophilic elements in the cell wall, as the water evaporates, the meniscus becomes more concave. The concavity of the water-air interfaces inside the mesophyll cell walls creates a negative pressure (water potential), which propagates to neighboring areas, creating the driving force necessary to pull water from the soil to the evaporation site \citep{Brown_2013}. Unless a plant is stressed due to excessive transpiration, the transpired water should be entirely replaced by the water absorbed by the roots and then transported inside the xylem \citep{Hölttä_et_al._2017}.
+
+The rate of root water uptake (Q) depends on the water potential gradient between the soil and the xylem, and on root surface area (S) \citep{Gambetta_G.A._et_al._2017} (Figure \ref{fig:conductance}). The concept of hydraulic conductivity (Lp) summarizes the relationship (equation \ref{eq:conductivity}):
+
+\begin{equation}
+    Lp= Q/\Delta\Psi*S
+\label{eq:conductivity}    
+\end{equation}
+
+\begin{figure}[htp]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.4\textwidth]{images/Hydraulic_cond.png}
+    \caption{Hydraulic conductivity of a root system. The water flow rate in the root (Q) is controlled by a water potential gradient ($\Delta\Psi$) and by the root surface area (A). Figure from \citet{Gambetta_G.A._et_al._2017}.}
+    \label{fig:conductance}
+\end{figure}
+
+% bigger water pot gradients --> higher traspiration rate --> closed stomata, higher stress due to water loss 
+
+\subsection{Stomata} \label{sec: stomata}
+While the relative water vapor concentration in the mesophyll is greater than its concentration in the atmosphere, due to xylem activity, the opposite is true for $CO_2$ concentration, which is lower in the leaf \citep{Venturas_M._D._et_al._2017}. These concentration gradients control water loss evapotranspiration and $CO_2$ uptake, which are also influenced by another factor, the diffusional resistance (Figure \ref{fig:leaf_2}). Thus, the transpiration rate can be calculated with equation \ref{eq:transpir}:
+
+\begin{equation}
+    Tr = \frac{C_{w leaf} - C_{w air}}{R_{leaf} + R_{air}}
+    \label{eq:transpir}
+\end{equation}
+
+$C_{w leaf}$ and $C_{w air}$ are the concentrations of water vapor in the leaf and in the air, while $R_{leaf}$ and $R_{air}$  represent the resistance in those same spaces \citep{Rascio_2017}. 
+\smallskip
+
+In particular, $R_{leaf}$ is the leaf stomatal resistance to gas diffusion, \textit{i.e.} the resistance associated with the stomatal pores in the epidermis of leaves. Plants transpire and take up $CO_2$ through these apertures, therefore the regulation of their size is essential to make sure the plant does not lose too much water, but still gets enough $CO_2$. Thus, stomatal resistance is controlled by two guard cells that surround the pore. If the water uptake by the roots cannot replace the water loss from the leaves, the stomata have to close in order to avoid a drop on water potential and dehydration \citep{Hölttä_et_al._2017}. The guard cells respond to factors such as temperature and intracellular $CO_2$ concentration by changing their turgor pressure, which leads to the opening or closing of the pores \citep{Taiz_and_Zeiger_2002}. 
+
+\begin{figure}[htp]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/Stomata_in_out.png}
+    \caption{Water and $CO_2$ uptake through the leaf. The concentration gradients control water loss and $CO_2$ uptake through stomatal apertures \textit{e.g.} vapor content concentration in the leaf is higher than in the atmosphere. Stomata exert physical resistance to the gas diffusion. Figure taken from \citet{Taiz_and_Zeiger_2002}.}
+    \label{fig:leaf_2}
+\end{figure}
+
+Stomatal resistance is influenced by temperature. For instance, at mid to high latitudes, an increase in temperature is associated with a higher $\Delta C_w$ between the leaf and the air, and therefore to higher transpiration rates, causing an increase in stomatal resistance \citep{Rascio_2017}. The rate of photosynthesis and stomatal conductance are also interconnected: with high photosynthetic activity, stomatal conductance (the inverse of stomatal resistance) is also high, but an increase in the internal leaf $CO_2$ concentration can cause an increase in stomatal resistance in order to limit water loss \citep{Jarvis_and_Davies_1998}.  
+
+
+\subsection{The phloem}
+\subsubsection{Structure and function}
+The phloem is a tissue that allows long-distance transport (translocation) of photosynthates, \textit{i.e.} the product of photosynthesis. Photosynthates must be transported from their source, usually mature leaves, to areas of growth that are unable to produce enough assimilates, such as young leaves, fruits, or roots. Storage organs, including roots, tubers and rhizomes, can be both sink, when accumulating nutrients, and source, when providing said nutrients to the rest of the plant during winter or other stress-inducing times \citep{Taiz_and_Zeiger_2002}. Seeds do the same, transitioning from sink to source when they germinate, so that the resources that they accumulated as starch can be used by the new plant to grow \citep{Rascio_2017}.
+\smallskip
+
+In Angiosperms, which are the main object of research on the phloem, xylem and phloem form vascular tissues throughout the entire plant, with the xylem being usually closer to the centre of the stem (or the root), and the phloem being external \citep{Taiz_and_Zeiger_2002}. The two continuously exchange water. 
+\smallskip
+
+The phloem is made up of living cells of different categories, most importantly sieve elements and companion cells. In Angiosperms, sieve elements are cylinder-shaped cells that are stacked on top of each other \citep{Rascio_2017}. The cross walls separating the cells are perforated by pores (Figure \ref{fig:sieve}), forming sieve plates, to achieve symplastic continuity and a higher hydraulic conductance inside the tube \citep{Knoblauch_and_Peters_2017}. Sieve cells do not possess a nucleus, a cytoskeleton and other essential organelles. In order to survive, each one is associated with one or more companion cells, which provide energy and resources to the sieve cells. Solutes can easily be exchanged between sieve cells and companion cells thanks to the plasmodesmata connecting them. Companion cells also contribute to the transport of photosynthates from mesophyll cells in leaves, where they are produced, to sieve cells \citep{Rascio_2017}. 
+
+\begin{figure}[htp]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.4\textwidth, angle=0]{images/sieve.png}
+    \caption{Hypocotyl of Cucurbita maxima. Image of a longitudinal section of two sieve tube elements, taken with an electron microscope. The pores of the sieve plate are visible between the two elements. The inset shows sieve plate pores. Image taken from \citet{Taiz_and_Zeiger_2002}.}
+    \label{fig:sieve}
+\end{figure}
+
+Phloem sap transports soluble sugars, the most common being sucrose, which varies from 0.3 to 0.9 M in concentration. Other solutes in lower concentrations include amino acids, hormones, proteins and inorganic solutes \citep{Taiz_and_Zeiger_2002}. 
+\smallskip
+
+Long-distance transport in the phloem is usually explained by the pressure-flow hypothesis, formulated by Ernst Münch in the 1920s. The hypothesis states that the loading of photosynthates into the phloem at the source causes a low osmotic potential ($\Psi_s$), which in turn causes a more negative water potential ($\Psi_{H_2O}$). As a consequence, water is drawn from the xylem into the phloem, and the turgor pressure near the source increases. The opposite phenomenon happens in the sink organs, where sugars are unloaded from the sieve elements and water potential becomes less negative, which leads water to leave the phloem as well and the pressure to decrease (Figure \ref{fig:munch}). This difference in turgor pressure ($\Delta\Psi_p$) pushes the sap from source to sink \citep{Knoblauch_et_al._2016}. 
+
+\begin{figure}[htp]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth, angle=0]{images/Munch_schema_tagl.png}
+    \caption{Relationship between xylem and phloem. Water enters the phloem at the source and leaves at the sink because of a water potential difference ($\Delta\Psi_w$), while a turgor pressure difference ($\Delta P$) pushes the phloem sap from source to sink. Image taken from \citet{Rascio_2017}.}
+    \label{fig:munch}
+\end{figure}
+
+Because the phloem sap is rich in nutrients, it is very likely to be attacked by herbivores or parasites. Therefore, the tissue employs some strong defense mechanisms. For instance, plants use callose to occlude wounded sieve tubes and protect them from attacks \citep{Will_et_al._2013}. It can be difficult to do experiments on the phloem, as the sensors that are inserted in the tree to measure phloem transport get sealed off due to the same defense mechanisms. The phloem has been called “the least understood plant tissue” due to such difficulties \citep{Knoblauch_et_al._2016}. Some indirect methods, such as isotope pulse-labelling, are available instead. With this technique, labelled ${}^{13} CO_2$ is taken up by the leaves and can then be traced with the help of an Isotopic Analyzer as it is transported inside the phloem \citep{Epron_D._et_al._2019}. 
+% 1 species Ricinus does not do that. Slightly toxic. For most plants you need indirect methods (labeling or measuring what comes out - proxy). Few methods that are expensive. Also, it is soft, difficult to take samples. 
+
+
+\subsubsection{Source-sink interrelationship} \label{sec:source}
+As stated in the previous section, phloem transport results from a sucrose concentration gradient between source and sink tissues. The source-sink interrelationship plays an important role in regulating both phloem transport and carbon allocation, which determines how the carbon is distributed and used by a plant (accumulation, transport or metabolism). In plants, starch is accumulated as an energy reserve, as opposed to as sucrose, which is soluble and mostly used for transport \citep{Taiz_and_Zeiger_2002}. Plants are able to adjust their starch and sucrose production according to different conditions. For example, in \citet{Thorne_and_Koller_1974}, all but one soybean leaves were shaded. After several days, the only source leaf experienced an increase in the rate of net photosynthesis, a decrease in starch concentration and an increase in sucrose concentration.
+\smallskip % add soluble sugars list and a bit more about 
+
+Carbon allocation is influenced by the communication between source and sink, for example a decreased sink demand can lead to limitations in the source photosynthetic activity and to a decrease in the speed of phloem transport toward the sinks. This acclimation to changing source-sink relationships ensures a better coordination among source photosynthetic activity, phloem translocation and sink organ demand \citep{Taiz_and_Zeiger_2002}. Communication between source and sink can happen through various means, including through transport sugars like sucrose: low sugar concentrations at the source can cause higher photosynthesis and export towards sink organs, whereas a high sugar concentration can inhibit photosynthesis at the source and encourage growth and storage at the sink, as summarized by Figure \ref{fig:sugar} \citep{Rolland_et_al._2002}. According to the model by \citet{Chiou_and_Bush_1998}, a lower sink demand causes an accumulation of sucrose in the sink, which in turn cause a decrease of the osmotic gradient in the phloem between source and sink. As a consequence, phloem transport slows down, and sugar accumulates in the source (mesophyll cells) as well, which leads to downregulation of photosynthesis. 
+%which in turn cause down-regulation of phloem loading at the source. Thus, carbohydrates accumulate in the source (mesophyll cells), which can lead to downregulation of photosynthesis 
+
+
+\begin{figure}[htp]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.6\textwidth]{images/Source-sink.png}
+    \caption{Phloem transport from source (leaves) to sink (young leaves, meristems, flowers, fruit, roots) is affected by sugar concentration. While low sugar concentrations cause a higher photosynthetic activity at the source and a decrease in growth and storage at sink level, the opposite happens when high concentrations of sucrose are available. Image taken from \citet{Rolland_et_al._2002}.}
+    \label{fig:sugar}
+\end{figure}
+
+Decreased sink demand can happen, for example, if a plant undergoes defruiting, because sink size (the total biomass of sink tissue) gets reduced \citep{Balasubramanian_et_al._2023}. 
+% Source-sink relationship can be explored by applying a variety of treatments, such as girdling and defruiting, to plants, and can have applications in agriculture as well, if fruits are the sink organs being studied (probably cut this).
+%Several studies have been performed over the years about the relationship between sink demand and photosynthetic activity. 
+In \citet{Franck_et_al._2006}, the authors girdled \textit{Coffea arabica} branches at their base. Girdling is a technique where scientists remove a ring of phloem in order to disconnect sources and sinks in the plant. Total soluble sugar concentration ($SSC_m$) and maximal leaf net $CO_2$ assimilation rate ($A_{max}$) were then measured on the mature leaves of the girdled branches (source). The results showed that $A_{max}$ was negatively correlated to $SSC_m$ and that it was higher in branches with higher fruit loads. A conclusion was drawn that there was sink demand feedback on photosynthetic activity \textit{e.g.} low fruit loads demanded less photosynthates, therefore photosynthetic activity decreased. It was concluded that the feedback was mediated by the accumulation of sugars in the leaf phloem. 
+\smallskip
+
+Other similar experiments on apple trees \citep{Wünsche_et_al._2005} and peach trees \citep{Duan_et_al._2008} provided similar results, with photosynthetic rate decreasing when the crop load was reduced or removed.
+
+\subsubsection{Sink activity and soil cooling} \label{sec:cool}
+Sink strength is the ability of a sink organ to import photoassimilates. It is co-regulated by two factors: sink size, which was previously discussed in \ref{sec:source}, and sink activity, \textit{i.e.} the rate of uptake of photoassimilates \citep{Balasubramanian_et_al._2023}. Temperature can have an effect on sink strength by influencing sink activity. For example, roots, which are a major sink organ for trees, can have their sink activity inhibited by soil cooling. If root temperature goes down, the process of respiration - which consumes the sugars produced by photosynthesis and is the main driver for all metabolic activities including root growth - decreases as well. Thus, less carbon is required for growth, and its allocation towards the roots is limited by lower temperatures \citep{Lambers_2008}. 
+% growth and respiration are temperature-dependent/ slowed down by T
+
+Soil cooling is not as disruptive as girdling is: since no tissues are damaged, wound responses do not get triggered, and there is a lower risk of changes in secondary metabolism affecting the experiment. Similarly to defruiting, soil cooling has been known to limit photosynthesis, as this thesis will investigate. The inhibition is thought to be caused by both stomatal and non-stomatal limitation (NSL). The latter includes mesophyll and chloroplast resistance to $CO_2$ diffusion and metabolic restrictions such as RuBisCO inactivation \citep{Signarbieux_et_al._2011, Salmon_et_al._2020}. Previous experiments on the topic were performed on several different species like \textit{Artemisia tridentata} \citep{BassiriRad_et_al._1993}, pine \citep{Day_et_al._1991, Lintunen_et_al._2020}, aspen and spruce \citep{Cai_and_Dang_2002}. 
+\smallskip
+
+\citet{Day_et_al._1991} observed that stomatal limitation may have had a major role in the decrease of net photosynthetic rate as temperature dropped from 24° C to 7° C. This is suggested by stomatal conductance and intercellular $CO_2$ concentration declining as well. At temperatures below 7°C, intercellular $CO_2$ concentration increased, but the photosynthetic rate kept decreasing, suggesting increasing non-stomatal limitation. This experiment suggests that stomatal and non-stomatal limitation are coordinated with each other during stressful conditions for the plant, with stomata controlling photosynthesis when there is little stress and NSL coming into play with increasing stress. Similar results were obtained with a drought experiment, with NSL increasing during severe drought \citep{Drake_et_al._2017}.
+\smallskip
+
+Root cooling for \textit{Artemisia tridentata} also resulted in a limitation of photosynthesis. However, the \textit{A} (photosynthetic rate) versus $C_i$ (intercellular $CO_2$ concentration) curve did not change with temperature, which suggested stomatal limitation only \citep{BassiriRad_et_al._1993}. 
+\smallskip
+
+The processes driving stomatal and non-stomatal limitations are still not fully understood. While they can be a result of sugar accumulation in the sink, they might also be connected to a lower root hydraulic conductivity. When soil temperature goes down, hydraulic conductivity has been shown to also decline. Because the roots take up water less efficiently, the water potential of the entire plant becomes more negative, and stomatal conductance ends up declining as well \citep{Day_et_al._1991, Lintunen_et_al._2020}.
+
+%Cooling a sink tissue inhibits activities that require metabolic energy and results in a decrease in the speed of transport toward the sink: OK
+%list of everything that is hypothesized to happen once you cool the roots: hyd cond goes down, less water uptake, phloem transport gets slower, phot slows down due to both sink fb and lower w pot: OK
+
+\subsection{\textit{Betula pendula}}
+\textit{Betula pendula}, or European white birch, is a deciduous tree with white bark, drooping outer branches and an average height of 25 m \citep{Vakkari_2009}. Leaves are simple, triangular-shaped, with a dentate margin. It is a Eurosiberian tree distributed in almost all of Europe (but most abundant in Northern Europe) and many parts of Asia and North America \citep{GBIF_Secretariat_2024}. Information on \textit{Betula pendula}'s vascular tissues (Figure \ref{fig:stem}), and on sink limitation is scarce, as studies are usually conducted on model organisms like \textit{Arabidopsis thaliana}.
+
+\begin{figure}[htp]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.2\textwidth]{images/birch_stem.png}
+    \caption{Cross section of \textit{Betula pendula}'s stem. Secondary growth with outer phloem tissue (ph), cambial zone (ca) and inner xylem (xy). Image taken from \citet{Hellman_et_al._2018}.}
+    \label{fig:stem}
+\end{figure}
+
+\cleardoublepage
+
+\section{Aim of the thesis} \label{sec:aim}
+The present work was conducted in the framework of Xin Zhuang’s Doctorate research. The wider scope of the research is a study on the effects of sink limitation on \textit{Betula pendula} source activity and carbon translocation in the phloem (Zhuang et al., in preparation). Sink activity reduction was achieved by cooling the soil around the roots of 12 saplings down to 4° C, while 8 other trees were left untreated to function as controls.
+\smallskip
+
+The experiment consisted of several parts: leaf gas exchange measurements were conducted to gain data on source activity (photosynthesis); sap flow and water potential measurements provided information on xylem transport; isotope labelling was used to study phloem translocation. This thesis will present a part of the results, namely the effects of the sink limitation on canopy photosynthesis, with the hypothesis being that a decreased sink activity will cause a reduction of the leaf photosynthetic activity. For this part of the experiment, gas exchange variables, such as $CO_2$ net assimilation rate and photosynthetic efficiency, were measured with the purpose of understanding how the photosynthetic rate changed with soil temperature. The experiment also aimed at distinguishing the role of stomatal limitation and non-stomatal limitation in reducing photosynthetic activity after the cooling. 
+\smallskip
+
+This thesis will also discuss the possible confounding effect of soil cooling on leaf gas exchange due to changes in the plant water status, as measured by water potential. Here, the hypothesis is that water potential will decrease as soil temperature decreases. This is because soil cooling is expected to cause a decline in the water uptake capacity of the roots and in water potential values, with stomatal resistance increasing as a result. The lower water uptake is thought to be a contributing factor to the lower photosynthetic rate, in addition to sink limitation and sugar accumulation. 
+
+% we limit sink activity + side effect: hydraulic conductivity between root and soil (water has more trouble moving from soil to xylem) - water potential measures that (references): OK
+
+
+\cleardoublepage
+
+\section{Materials and Methods} \label{sec:materials}
+Firstly, section \ref{sec:setup} discusses how the experiment was set up and the conditions under which it was performed. 
+
+Then, section \ref{sec:measure} talks about the variables that were measured and the instruments that were used in order to study the effects of soil cooling on photosynthetic rate and hydraulic status of the saplings.
+
+Section \ref{sec:stat} is a description of the statistical analysis that was conducted to achieve the results.
+
+\subsection{Experiment setup} \label{sec:setup}
+I witnessed and worked on the experiment during my time as a trainee at the University of Helsinki, under the mentorship of Xin Zhuang and the supervision of Dr. Yann Salmon. The experiment took place at the Viikki Campus (Department of Forest Sciences, Faculty of Agriculture and Forestry), at the University of Helsinki, in a greenhouse environment, starting from June 20th 2023 and ending on August 21st of the same year. The environmental conditions in the greenhouse were 21° C and 60\% relative humidity on average. The setup involved 20 birch saplings (\textit{Betula pendula}), of approximately 3-5 years of age and 2-2.5 m tall. The trees were replanted in 20-liter pots with a mixture of forest peat and original nursery field soil, and placed in the greenhouse a week before the start of the measurements. 
+\smallskip
+
+The LAUDA thermostat (Figure \ref{fig:lauda}) was used to bring temperature down to 4 °C. The thermostat consists of a refrigeration unit and a tubing system, which was filled with anti-freeze \citep{Lauda_1989}. The silicone tubes were buried in the pots so that they were closer to the roots, cooling them more efficiently. Further insulation was achieved by putting the pots into coolbags and wrapping foam around the tubes (Figure \ref{fig:treated}). 
+
+
+\begin{figure}
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.6\textwidth, angle=270]{lauda.jpg}
+    \caption{Cooling system connected to Lauda's external circulation. Silicone tubes were buried in the pots, which were insulated thanks to coolbags.}
+    \label{fig:lauda}
+\end{figure}
+\smallskip
+
+
+\subsection{Measurements} \label{sec:measure}
+Measurements were taken on five trees at a time. Every batch, numbered from 1 to 4, consisted of two untreated trees (controls) and three trees that had been cooled down (treated trees). The first group was measured from June 30th to July 13th; the second batch was measured from July 13th to August 1st; the third group was measured from August 1st to August 7th; the fourth batch was measured from August 7th to August 10th. 
+\smallskip
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.6\textwidth, angle=270]{treated_trees_2.jpg}
+    \caption{Treated trees in the greenhouse.}
+    \label{fig:treated}
+\end{figure}
+
+The instruments used during the experiment were K-type thermocouples for measuring soil temperature, the LI-6800 (LI-COR’s fourth generation portable photosynthesis system) for measuring gas exchange, and a pressure chamber for water potential. 
+\smallskip
+
+\subsubsection{Soil temperature measurements}
+K-type thermocouples are sensors containing Chromel and Alumel conductors. The difference in voltage produced by the thermocouple can be used to measure a difference in temperature \citep{Hunt_1964}. The thermocouples employed in this experiment had a 2 mm diameter and could sense a maximum temperature of +250° C.
+
+\subsubsection{Gas exchange}
+The difference in canopy source activity between control and treated saplings was estimated thanks to four leaf gas exchange variables: $CO_2$ net assimilation rate (\textit{A}), photosynthetic efficiency (\textit{$A/C_i$}), $H_2O$ evapotranspiration rate (\textit{E}) and stomatal conductance to water vapor (\textit{gsw}). $CO_2$ net assimilation is defined as a measure of the difference between photosynthesis and respiration, while evapotranspiration measures the rate of water vapor loss. Both variables are connected to stomatal conductance, as $CO_2$ and $H_2O$ diffuse mostly through the stomata \citep{LI-COR_Inc._2020}. Photosynthetic efficiency, which is a normalization of \textit{A} by $C_i$ (intercellular $CO_2$), was calculated and then used as a variable, in order to have some data about non-stomatal limitation as well. The ratio remains constant if both \textit{A} and \textit{$C_i$} are decreasing, which indicates stomatal control, whereas decreasing values indicate NSL, as \textit{A} is still decreasing despite constant or increasing \textit{$C_i$} \citep{Drake_et_al._2017}. % is this right?
+The four variables provide different information about photosynthetic activity, with \textit{A} and \textit{$A/C_i$} measuring the rate of photosynthesis directly, and \textit{E} and \textit{gsw} offering information about the degree of opening of the stomata. A decline in the gas exchange variables indicates decreased photosynthetic activity. 
+\smallskip
+
+\textit{A}, \textit{E}, \textit{gsw} and \textit{$C_i$} were all measured with the LI-6800, after burying the tubes in the pots, turning the cooling system on, and waiting for the soil to cool down for several hours and then at least 3 days for plants to reach a steady state. 
+\smallskip
+
+The LI-6800 (Figure \ref{fig:licor}) can non-destructively measure photosynthetic processes happening at leaf-level. Several leaf chambers of different dimensions are available; for this experiment, a $6-cm^2-$area chamber was used \citep{LI-COR_Inc._2020}.
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.4\textwidth, angle=270]{images/licor_1.jpg}
+    \caption{Portable Photosynthesis System closed onto birch leaf.}
+    \label{fig:licor}
+\end{figure}
+
+Before measuring, a reference needs to be set for $CO_2$  concentration, humidity, temperature and light going into the chamber: for our experiment, a $CO_2$  concentration of 400 $\mu$mol $mol^{-1}$  and 60\% relative humidity were chosen. The temperature was set at 26° C and the light was set at 500 $\mu$mol $m^{-1}s^{-1}$. 
+\smallskip
+
+After the chamber is closed onto a leaf, two variables, $CO_2$  net assimilation rate (\textit{A}) and $H_2O$ evapotranspiration rate (\textit{E}), can be obtained by using the infrared gas analysers (IRGA) next to the leaf chamber (Figure \ref{fig:chamber}).
+Firstly, the gas analysers measure the flow rate ($\mu$mol air $s^{-1}$) and the $CO_2$ and $H_2O$  concentrations (\textit{$\mu_0$}, \textit{$c_0$}, \textit{$w_0$} respectively) before entering the leaf chamber (reference). $CO_2$ and water vapor concentrations (\textit{$c_a$} and \textit{$w_a$} respectively) are then measured again after coming out of the chamber (sample) \citep{LI-COR_Inc._2020}.  
+\smallskip
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.5\textwidth]{images/licor_chamber.png}
+    \caption{Schematic of LI-6800 gas exchange system. The gas analysers measured flow rate, $CO_2$, $H_2O$ as they enter and then as they exit the leaf chamber. Image from \citet{LI-COR_Inc._2020}.}
+    \label{fig:chamber}
+\end{figure}
+
+\noindent It is not necessary to directly measure the flow rate exiting the chamber ($\mu_a$). The water vapor released by the leaf can be added to the $\mu_0$ to obtain this value.
+
+\begin{equation}
+    \mu_a = \mu_0 + sE
+    \label{eq:flow}
+\end{equation}
+where \textit{s} represents leaf area.
+\smallskip
+
+After these measurements, the variables \textit{A} and \textit{E} can be computed from the difference in concentration between reference and sample.
+
+\noindent Transpiration, on a leaf area (\textit{s}) basis, is calculated as: 
+\begin{equation}
+    sE = \mu_a w_a - \mu_0 w_0
+    \label{eq:transpiration}
+\end{equation}
+
+\noindent Equation \ref{eq:flow} and \ref{eq:transpiration} can be rearranged to calculate $H_2O$ evapotranspiration rate (\textit{E}):
+
+\begin{equation}
+    E = \frac{\mu_0(w_a - w_0)}{s(1 - w_a)}
+\end{equation}
+
+\noindent The equation to calculate the $CO_2$ net assimilation rate is similar to equation \ref{eq:transpiration}, but in this case the gas is being taken up by the leaf and fixed during the Calvin cycle, so $c_a$ is lower than $c_0$:
+
+\begin{equation}
+    sA = \mu_0 c_0 - \mu_a c_a
+    \label{eq:assimilation}
+\end{equation}
+
+\noindent By rearranging equations \ref{eq:flow} and \ref{eq:assimilation}, we get:
+
+\begin{equation}
+    A = \frac{\mu_0 [c_0 - c_a (\frac{1 - w_0}{1 - w_a})]}{s}
+\end{equation}
+
+Stomatal conductance to water vapor (\textit{gsw}) and intercellular $CO_2$  concentration are calculated thanks to other measurements taken by LI-6800, including leaf temperature \citep{LI-COR_Inc._2020}.
+\smallskip
+
+We measured \textit{A}, \textit{E}, \textit{gsw} and \textit{$C_i$} on multiple days for each batch. For example, the saplings from batch 1 (treated trees BQ1, BQ2, BQ3 and controls BC1 and BC2) were measured on June 30th and on July 4th, 10th and 13th. For each tree, three leaves (replicates) were selected to be measured. Each leaf was measured three times, leaving about ten seconds between each measurement, and the three values were then averaged to obtain the individual leaf value. This was done in order to limit the impact of small fluctuations in the measured signal. As an example, Table \ref{table:controls} shows the measurements that were taken on July 4th for the control trees. For each tree, measurements from the three leaves were then averaged to get the final value to use for our analysis. 
+
+
+\begin{table}[H]
+\centering
+\caption{Measurements taken on July 4th for the control trees from batch 1 (BC1 and BC2). The variables are evapotranspiration rate (\textit{E}), $CO_2$ assimilation rate (\textit{A}), intercellular $CO_2$ concentration (\textit{$C_i$}) and stomatal conductance (\textit{gsw}).}
+
+\begin{tabular}{| l | l | l | l | l | l | l |}
+\hline
+\small{TIME} & \small{TREE ID} & \small{REPL} & \small{E (mol $m^{-2} s^{-1}$)} & \small{A ($\mu mol$ $m^{-2} s^{-1}$)} & \small{$C_i$ ($\mu mol$ $mol^{-1}$)} & \small{gsw (mol $m^{-2} s^{-1}$)} \\
+\hline
+10:41:36 & BC1 & 1 & $1,77x10^{-3}$  & 11,23 & 244,93 & 0,14 \\
+\hline
+10:43:31 & BC1 & 1 & $1,71x10^{-3}$  & 11,31 & 241,34 & 0,13 \\
+\hline
+10:44:43 & BC1 & 1 & $1,70x10^{-3}$  & 11,36 & 239,37 & 0,13 \\
+\hline
+11:00:11 & BC1 & 2 & $1,91x10^{-3}$  & 14,16 & 217,86 & 0,15 \\
+\hline
+11:01:08 & BC1 & 2 & $1,87x10^{-3}$  & 14,27 & 214,01 & 0,14 \\
+\hline
+11:02:04 & BC1 & 2 & $1,89x10^{-3}$  & 14,29 & 215,36 & 0,15 \\
+\hline
+11:15:54 & BC1 & 3 & $3,47x10^{-3}$  & 12,67 & 301,79 & 0,29 \\
+\hline
+11:17:30 & BC1 & 3 & $3,37x10^{-3}$  & 12,63 & 301,54 & 0,28 \\
+\hline
+11:18:47 & BC1 & 3 & $3,31x10^{-3}$  & 12,59 & 300,96 & 0,28 \\
+\hline
+11:55:53 & BC2 & 1 & $3,09x10^{-3}$  & 14,69 & 276,68 & 0,25 \\
+\hline
+11:56:44 & BC2 & 1 & $3,12x10^{-3}$  & 14,71 & 276,86 & 0,25 \\
+\hline
+11:57:26 & BC2 & 1 & $3,13x10^{-3}$  & 14,65 & 277,45 & 0,25 \\
+\hline
+12:12:56 & BC2 & 2 & $2,64x10^{-3}$  & 11,31 & 290,15 & 0,21 \\
+\hline
+12:13:58 & BC2 & 2 & $2,63x10^{-3}$  & 11,29 & 290,72 & 0,21 \\
+\hline
+12:15:17 & BC2 & 2 & $2,6x10^{-3}$  & 11,32 & 289,90 & 0,21 \\
+\hline
+12:31:16 & BC2 & 3 & $2,89x10^{-3}$  & 13,71 & 276,48 & 0,23 \\
+\hline
+12:31:56 & BC2 & 3 & $2,94x10^{-3}$  & 13,76 & 278,11 & 0,24 \\
+\hline
+12:32:39 & BC2 & 3 & $2,91x10^{-3}$  & 13,79 & 277,23 & 0,23 \\
+\hline
+
+\end{tabular}
+\label{table:controls}
+\end{table}
+
+\subsubsection{Water potential} 
+The pressure chamber (Figure \ref{fig:pressure}), also known as Scholander chamber, is a device for measuring water potential by applying pressure to a leaf thanks to the nitrogen tank connected to the chamber. For our experiment, two leaves were taken from each tree and inserted in the chamber one at a time, with the cut end of the stem exposed outside of it. Pressure was then applied until water came out at the surface. This is the amount of pressure that is equal and opposite to the leaf water potential. Therefore, a high value of pressure indicates a low water potential \textit{e.g.} 20 bars, which signals a stronger pulling force at the tree canopy. This means that the tree is experiencing water stress. Maximum instrument operating pressure was 100 Bar \citep{PMS_Instrument_Company_2009}.
+\smallskip
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.5\textwidth]{images/pressure_chamber.jpg}
+    \caption{Pressure chamber in the greenhouse. The leaf is inserted in the chamber and the petiole can be observed through a lens, as pressure grows, until water comes out of it.}
+    \label{fig:pressure}
+\end{figure}
+
+%second image?
+Measurements were taken in the early afternoon to make sure they were comparable, as water potential changes during the day, usually having the most negative values at midday \citep{Morandi_et_al._2010}. For each tree, two leaves were measured and then an average was calculated and used for the data analysis.
+
+%$ \prescript{13}{}{\(CO_2\)} $
+
+\subsection{Statistical analysis} \label{sec:stat}
+For the statistical analysis, I used the programming language R \citep{R_Core_Team_2023}.
+\smallskip
+
+The first part of the analysis (section \ref{sec:first} in the Results) tested whether there was a significant difference between the leaf gas exchange values of cooled trees and control trees by analysing four variables: \textit{A}, \textit{$A/C_i$}, \textit{E} and \textit{gsw}. The possibility of a significant difference among the four batches had to be taken into consideration as well, as they were measured during different parts of the growing season, starting from early July and ending in mid August.
+\smallskip
+
+Employing a parametric ANOVA was not possible, as the distribution of the data was not normal nor were the residuals of the ANOVA analysis. Data transformation did not solve the issue. Therefore, these data were tested for difference using the Scheirer–Ray–Hare test with a significance level of $0.05$. The Scheirer–Ray–Hare test is a non-parametric test used for a two-way factorial design \citep{Mangiafico_2016}.    
+\smallskip
+
+I used the package \texttt{rcompanion} \citep{Mangiafico_2024}. An example of the code used for the this part, for the variable \textit{A}, is given below:
+
+\begin{verbatim}
+    SRH_A <- scheirerRayHare(avg.A ~ batch + treatment, data=licor_avg)
+\end{verbatim}
+
+The second part of the analysis (section \ref{sec:second} in the Results) aimed at studying whether there was a significant effect of soil cooling (and soil temperature in general) on the same four gas exchange variables. $P<0.05$ was considered to be statistically significant here as well.
+Firstly, I used a classical linear regression. The code below is an example for the \textit{A} variable: 
+
+\begin{verbatim}
+    fitA <- lm(licor_avg$avg.A ~ licor_avg$batch + licor_avg$soil_temperature)
+\end{verbatim}
+
+The model was validated with the help of diagnostic plots \citep{Zuur_2009} that represented the residuals, \textit{i.e.} the difference between the fitted values and the observed values. The QQ-plot of the residuals for the linear regression shows that the points are not in a line, so the distribution of the residuals of the linear regression is not normal (Figure \ref{fig:residuals}). 
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.8\textwidth]{images/qq_residuals_3.png}
+    \caption{QQ-plot of the residuals for normality for the relationship between $CO_2$ net assimilation rate and soil temperature.}
+    \label{fig:residuals}
+\end{figure}
+
+After establishing that classical linear regression was not suitable, I tried a generalized linear model with a gamma distribution. This distribution looks like a Gaussian distribution skewed to the left \citep{Zuur_2009}, which is similar to how the distribution for \textit{A} values appears (Figure \ref{fig:distrib}). This model was used for \textit{A} and \textit{$A/C_i$}.
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/A_distrib.png}
+    \caption{Histogram showing the distribution of $CO_2$ net assimilation (\textit{A}) in cooled and control trees. The distribution is slightly skewed to the left.}
+    \label{fig:distrib}
+\end{figure}
+
+An example of the code is given below for \textit{A}:
+
+\begin{verbatim}
+    gammaA <- glm(formula = licor_avg$avg.A ~ 
+              licor_avg$batch + licor_avg$soil_temperature,
+              family = Gamma(), data = licor_avg)
+\end{verbatim}
+
+This model was also validated with the help of diagnostic plots. Figure \ref{fig:diagnostics} shows the plot of response residuals (observed minus fitted values) for \textit{A}. There is a lack of pattern, which indicates that there are no other critical factors missing from the model, making it a good fit for the data \citep{Zuur_2009}. %If there was a variable that was important and we had not considered, then a pattern would appear
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.6\textwidth]{images/residuals_gamma.png}
+    \caption{Diagnostic plot for the gamma distribution model for the relationship between $CO_2$ net assimilation rate and soil temperature. The plot shows response residuals (observed minus fitted values).}
+    \label{fig:diagnostics}
+\end{figure}
+
+The response of the other two variables (\textit{E} and \textit{gsw}) to the soil temperature was also non-linear, even after data transformation was attempted. Therefore, the Generalized Additive Model (GAM) was employed instead of the Generalized Linear Model. The Generalized Additive Model is suitable to study non-linear relationships and fit the data better than the gamma distribution.
+\smallskip
+
+Here is an example for \textit{E}. I used the package \texttt{mgcv} \citep{Wood_2017}:
+
+\begin{verbatim}
+   gamE_ <- gam(licor_avg_2$avg.E ~ 
+   licor_avg_2$batch + s(licor_avg_2$soil_temperature, by=licor_avg_2$batch))
+\end{verbatim}
+    
+The same models and the same validation process were chosen for the third part of the analysis (section \ref{sec:third} in the Results), where the effect of water potential on the four gas exchange variables was examined, with the following code (for \textit{A}):
+
+\begin{verbatim}
+    gammaA2 <- glm(licor_avg$avg.A ~ 
+               licor_avg_3$batch + licor_avg_3$water_potential,
+               data=licor_avg_3, family=Gamma())
+\end{verbatim}
+
+
+\cleardoublepage
+
+\section{Results} \label{sec:res}
+This section will discuss results pertaining to batch 1, 2 and 4. Batch 3 will not be included due to anomalies found throughout the data analysis. 
+\smallskip
+
+\subsection{Comparison between gas exchange values in control trees and cooled trees} \label{sec:first}
+The first part of the analysis aimed at comparing the photosynthetic activity in control trees and treated trees.  
+\textit{A}, \textit{E} and \textit{gsw} values were significantly different between the two groups, with the control trees having significantly higher values than the treated trees (p-value$<10^{-5}$). A boxplot, generated using the package \texttt{ggplot2} \citep{Wickham_2016}, was chosen to represent the distribution of data per treatment. The box includes the values between the first and the third quartile and is divided by a line, the median. The "whiskers" show the values outside of the central 50\%. The boxplots (Figure \ref{fig:A_con_sign}, Figure \ref{fig:E_with_sign} and Figure \ref{fig:gsw_with_sign}) also highlight this difference between the two treatments: the two distributions show very little overlapping. 
+
+The median of \textit{A} values for the controls was about 9 $\mu mol m^{-2} s^{-1}$, whereas the median for the cooled trees was less than 5 $\mu mol m^{-2}s^{-1}$ (Figure \ref{fig:A_con_sign}). 
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.8\textwidth]{images/A_con_sign.png}
+    \caption{$CO_2$ net assimilation in control and cooled trees. The boxplot on the left (control trees) shows significantly higher values and a higher median that the boxplot on the right (treated trees).}
+    \label{fig:A_con_sign}
+\end{figure}
+
+The median of \textit{E} values for the controls is about $2x10^{-3}$ $mol m^{-2}s^{-1}$, while the median for the treated trees is about $5x10^{-4}$ $molm^{-2}s^{-1}$ (Figure \ref{fig:E_with_sign}). 
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.8\textwidth]{images/E_with_sign.png}
+    \caption{Evapotranspiration rate in control and cooled trees.}
+    \label{fig:E_with_sign}
+\end{figure}
+
+The median of \textit{gsw} values for the controls was about 0.14 $mol m^{-2}s^{-1}$, whereas the median for the cooled trees was less than 0.05 $mol m^{-2}s^{-1}$ (Figure \ref{fig:gsw_with_sign}). 
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/gsw_with_sign.png}
+    \caption{Stomatal conductance to water vapor in control and cooled trees.}
+    \label{fig:gsw_with_sign}
+\end{figure}
+
+Photosynthetic efficiency was also significantly different between control trees and treated trees, however the p-value was higher (0.007). There was a significant difference among the batches as well (p-value=0.04): only batch 4 had significantly different values between the two groups (0.01), whereas for the other two batches, the p-values were higher than 0.05. Boxplot \ref{fig:A_Ci_with_sign} shows that control trees have higher values than treated trees, but the medians of the two groups are closer to one another (0.03 $mol m^{-2} s{-1}$ for the controls and about 0.02 $mol m^{-2} s{-1}$ for the treated trees). There is a lot of overlapping between the two distributions.
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/A_Ci_with_sign.png}
+    \caption{Photosynthetic efficiency in control and cooled trees.}
+    \label{fig:A_Ci_with_sign}
+\end{figure}
+
+
+\subsection{Effect of soil temperature on leaf gas exchange} \label{sec:second}
+Having established that the cooled trees have significantly lower values for three gas exchange variables, the second part of the analysis adds to the first part by quantifying the effect of low soil temperatures (explanatory variable) on the leaf gas exchange variables (response variables). The impact of soil temperature on three gas exchange variables, \textit{A}, \textit{E} and \textit{gsw}, proved to be significant. 
+\smallskip
+
+The relationship between \textit{A} and soil temperature had a p-value=$2.8x10^{-5}$ for the slope of the model. All batches show a decrease in $CO_2$ assimilation as temperature decreases (Figure \ref{fig:A2}). However, there is a significant difference among the batches as well (0.03): they are all significant individually, but batch 4 has the lowest p-value (0.009), with the values of cooled trees being closer to one another and less scattered. Another noticeable characteristic of the plot is that \textit{A} values for control trees get progressively lower as time passes and as the growing season progresses, with batch 1 - which was measured earlier in the season - having the highest values, and batch 4 having the lowest values. 
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/A_def.png}
+    \caption{The scatter plot shows the effect of soil temperature on $CO_2$ assimilation. Batches 1, 2 and 4 are represented by different colors, whereas two different shapes are used for control (circle) and treated (triangle) trees. All batches show an increase as temperature increases.}
+    \label{fig:A2}
+\end{figure}
+
+Soil temperature had a highly significant effect on \textit{E}, with batch 1 having the most significant p-value ($7.7x10^{-6}$) and batch 2 and 4 having p-values of $3.5x10^{-5}$ and $3x10^{-3}$ (Figure \ref{fig:E2}). Batch 1 has the highest control values here as well.
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/E_def.png}
+    \caption{The scatter plot shows the effect of soil temperature on the $H_2O$ evapotraspiration rate. All batches show an increase as temperature increases.}
+    \label{fig:E2}
+\end{figure}
+
+The scatter plot representing the effect of soil temperature on \textit{gsw} shows a similar trend to the previous plot, with p-values of $3.5x10^{-7}$ for batch 1, $3.8xx10^{-6}$ for batch 2 and $8xx10^{-4}$ for batch 4 (Figure \ref{fig:gsw2}). 
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/Rgsw_def.png}
+    \caption{The scatter plot shows the effect of soil temperature on the stomatal conductance. All batches show an increase as temperature increases.}
+    \label{fig:gsw2}
+\end{figure}
+
+These last two plots show the clearest relationship between response variable and explanatory variable. The values of cooled trees for \textit{E} and \textit{gsw} have lower, less scattered values than the ones for \textit{A}, creating steeper slopes. % quantify that with percentages?
+\smallskip
+
+The relationship between \textit{$A/C_i$} and soil temperature is significant when considering all three batches (p=0.04), but the the relationship with each individual batch is not significant (the p-values are 0.19, 0.42 and 0.06 for batch 1, 2 and 4, respectively), as a lot of the cooled trees have high photosynthetic efficiency values (Figure \ref{fig:A_over_Ci2}).
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/A_Ci_def.png}
+    \caption{The scatter plot shows the effect of soil temperature on photosynthetic efficiency. The individual batches do not show a significant increase as temperature increases.}
+    \label{fig:A_over_Ci2}
+\end{figure}
+
+\subsection{Effect of water potential on leaf gas exchange} \label{sec:third}
+The third part of the analysis looked at the water potential data. Firstly, the effect of soil temperature on water potential was examined using a gamma distribution model. With a p-value=0.446, there was no significant relationship between the explanatory variable and the response variable. The plot (Figure \ref{fig:soil_t_wat}) shows very scattered data. While the control trees have higher soil temperature than the cooled trees, the distribution of water potential values is not as clear, with control and cooled trees from the same batch often having similar values \textit{e.g.} most water potential values from batch 2 range from about -7 bars to about -9 bars. % unclear? vague?
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.8\textwidth]{images/soil_t_vs_wat.png}
+    \caption{There is no significant effect of soil temperature on water potential values. The scattered values are an indication of the lack of a significant relationship between the two variables.}
+    \label{fig:soil_t_wat}
+\end{figure}
+
+A further analysis was made to establish whether water potential had affected the four gas exchange variables. Here, the effect was not significant for any of the response variables. The relationship between \textit{A} values and water potential had p-value=0.0727 for batch 1, 0.22 for batch 2 and 0.17 for batch 4. Figure \ref{fig:A3_def} shows that, similarly to the previous plot (Figure \ref{fig:soil_t_wat}), control and cooled trees from batch 2 have a similar distribution, confirming that $CO_2$ assimilation is not significantly affected by water potential for this batch. Batch 1 and 4 do show a decrease in $CO_2$ assimilation as water potential increases, with control trees having lower water potential values than cooled trees. However, this effect is small, as confirmed by the p-values. % regression driven by controls having lower values for water potential and higher values for evapotranspiration/ other gas exch values - range of wp is too small
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.8\textwidth]{images/A3_def.png}
+    \caption{There is no significant effect of water potential on net $CO_2$ assimilation. The values for the three batches are scattered and confirm the lack of relationship between the two variables.}
+    \label{fig:A3_def}
+\end{figure}
+
+The relationship between $H_2O$ evapotranspiration and water potential (Figure \ref{fig:E3_def}) is only significant for batch 1 (p-value=0.01), which shows lower water potential values for control trees and higher values for cooled trees. Thus, there is a decrease in evapotranspiration values as water potential increases. The other two batches do not have significant p-values (0.06 for batch 2 and 0.21 for batch 4). The relationship between stomatal conductance and water potential is similar to the previous one between evapotranspiration and water potential, with the first batch being significant (p-value=0.006) and the other two not being significant (0.1 and 0.26).
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/E3_def.png}
+    \caption{Batch 1 shows a significant decrease in $H_2O$ evapotranspiration as water potential grows. The relationship between explanatory variable and response variable is not significant for the other two batches.}
+    \label{fig:E3_def}
+\end{figure}
+
+Finally, $A/Ci$ (photosynthetic efficiency) was not significantly affected by water potential, with p-values of 0.46, 0.82 and 0.31 for the three batches (Figure \ref{fig:A.Ci3_def}).
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/A.Ci3_def.png}
+    \caption{The relationship between water potential and photosynthetic efficiency is not significant for any of the three batches.}
+    \label{fig:A.Ci3_def}
+\end{figure}
+
+\cleardoublepage
+
+\section{Discussion and future perspectives} 
+
+In section Aim of the thesis (section \ref{sec:aim}), two hypothesis were put forward. The first one proposed that the soil cooling would cause a reduced sink activity, which would result in a decreased rate of photosynthesis. This hypothesis was investigated by comparing the leaf gas exchange values of cooled trees and control trees (section \ref{sec:first}) and by studying the effect of soil temperature (explanatory variable) on the leaf gas exchange variables (response variables) (section \ref{sec:second}).
+\smallskip
+
+The second hypothesis suggested that low soil temperature would also have an effect on water potential, which in turn would affect the stomatal conductance and the photosynthetic rate, contributing to their decline. The impact of soil temperature on water potential and the subsequent effect of water potential on leaf gas exchange were discussed in section \ref{sec:third}.
+\smallskip
+
+When it comes to the first hypothesis, cooled trees had significantly lower values than control trees for three of the gas exchange variables: $CO_2$ net assimilation rate, $H_2O$ evapotranspiration rate and stomatal conductance to water vapor (section \ref{sec:first}). The values for control trees were highest for batch 1 and lowest for batch 4, probably due to the first batch having been measured earlier in the growing season, in the first half of July, when photosynthetic activity is at its peak \citep{Oksanen_2003}. 
+\smallskip  
+
+Unlike the other three gas exchange variables, cooled trees did not have significantly lower photosynthetic efficiency values ($A/C_i$) in two batches out of three. As $A/C_i$ had been chosen as a variable to get data on non-stomatal limitation, these results suggest that the decrease in photosynthetic rate is due to stomatal limitation, while non-stomatal limitation seems to have a minor role.
+\smallskip 
+
+The analysis in section \ref{sec:second} had similar results, with soil temperature having a significant impact on the same three variables, but not on the photosynthetic efficiency. 
+\smallskip
+% We can conclude that they are all negatively affected by low soil temperature. Photosynthetic efficiency appears to not be significantly affected. Therefore, the role of non-stomatal limitation seems to have been marginal in affecting the rate of photosynthesis (cut)
+\smallskip 
+
+As previously discussed in section \ref{sec:cool}, similar experiments on other trees species had reached several different conclusions, with \citet{BassiriRad_et_al._1993} also reporting a major role of stomatal limitation of photosynthesis, whereas \citet{Day_et_al._1991} reported both stomatal and non-stomatal limitation, and \citet{Cai_and_Dang_2002} found no significant impact of soil temperature on stomatal conductance. % what conclusion could potentially be drawn from this?
+\smallskip
+
+The second hypothesis was not supported by the results for the third part of the analysis (section \ref{sec:third}). Leaf water potential, which was expected to decrease with the decrease of soil temperature, was not significantly impacted by the cooling. Furthermore, water potential had no significant effect on the four gas exchange variables, with one exception: in batch 1, \textit{E} and \textit{gsw} values significantly increased as water potential declined. These results differ from previous experiment on the same topic, such as the experiment by \citet{Lintunen_et_al._2020}, where a decline in soil-to-leaf hydraulic conductivity followed a cooling treatment and coincided with a decline in stomatal conductance. 
+
+It is not surprising that this soil cooling experiment had different results than \citet{Lintunen_et_al._2020}, as the water potential values that were measured during our experiment only range from about -6.6 bar to -13.6 bar. If compared with other experiments where trees underwent water stress, \textit{e.g.} \citet{Salmon_et_al._2020}, which investigated the effects of drought on stomatal conductance, we can see that water potential for \textit{Betula pendula} can reach values as low as -25 bars for water-stressed trees. Another experiment \citep{Hölttä_et_al._2017}, during which trees were given a notching treatment (incision in the xylem), also showed a much larger range of water potential values, almost reaching -2.0 MPa (-20 bars), with $A/C_i$ significantly decreasing as water potential decreased (Figure \ref{fig:holltta}). On the contrary, the soil cooling treatment we performed did not have a strong impact on water potential, which in turn had a small or non-existent effect on the four gas exchange variables. 
+\smallskip
+
+\begin{figure}[H]
+\centering 
+\graphicspath{ {./images/} }
+    \includegraphics[width=0.7\textwidth]{images/A_Ci_vs_war_pot_modificato.png}
+    \caption{Experiment by \citet{Hölttä_et_al._2017}. After a notching treatment, aimed at lowering hydraulic conductance and water potential, photosynthetic efficiency ($A/C_i$) decreased significantly with decreasing water potential values. The red line shows the much smaller range of values that we had after the soil cooling treatment.}
+    \label{fig:holltta}
+\end{figure}
+
+As previously stated, the results examined in this thesis are a part of Xin Zhuang's PhD on carbon translocation in \textit{Betula pendula}. Therefore, further analysis will be conducted to put the results of the present work into context. In particular, leaf and bark sugar samples were also taken from each batch once during the gas exchange measurements and then a second time after finishing all measurements. These samples will be analyzed to get information about the feedback mechanism that is believed to cause the decline in photosynthetic rate that follows the soil cooling (section \ref{sec:source}).  
+\smallskip
+
+Further analysis will also be needed to better understand the last part of the Results (section \ref{sec:third}). Soil-to-leaf hydraulic conductivity will be calculated from the xylem sap flow rate and the soil-to-leaf water potential difference (Equation \ref{eq:conductivity}) so that its relationship to soil temperature and its impact on gas exchange values can be seen directly.  
+\smallskip
+
+In addition to studying the sink-source relationship, the experiment also included the isotope pulse-labelling of the trees with $ \prescript{13}{}{CO_2} $ in order to track carbon transport in the phloem and investigate a possible limitation in translocation due to the soil cooling. 
+\smallskip
+
+In conclusion, while the presence of a decline in the photosynthetic rate as a result of sink limitation was supported by the data, water potential seemed unaffected by soil temperature and did not have a key role in driving the photosynthetic rate. The lack of recent experiments that utilize soil cooling as a technique to study sink limitation highlights the importance of conducting research on this particular branch of tree physiology. 
+
+\cleardoublepage
+
+\section{Appendix 1}
+
+This is the code used for the data analysis. 
+
+\begin{verbatim}
+# importing gas exchange data
+licor_1 <- read.csv("data/final_version_with_comment_1a - Copia.csv", sep = ";",
+header = TRUE, dec =",")
+
+licor_1$treatment <- factor(licor_1$treatment) 
+
+# creating A/Ci column 
+licor_1$A.Ci <- licor_1$A/licor_1$Ci
+
+# removing outliers
+licor_2 <- subset(licor_1, licor_1$comment != "outlier")
+
+#calculating the average of the three values per leaf
+library(dplyr)
+
+licor_avg_1 <- licor_2%>%
+  group_by(X, date, tree.id, batch, treatment, replicate, Y)%>%
+  dplyr::summarise(avg.E_1=mean(E), avg.A_1=mean(A), avg.Ca_1=mean(Ca),
+  avg.Ci_1=mean(Ci), avg.gsw_1=mean(gsw), avg.A.Ci_1=mean(A.Ci),
+  avg.VPcham_1=mean(VPcham), avg.VPDleaf_1=mean(VPDleaf),
+  avg.Q_1=mean(Q_out))%>%
+  as.data.frame()
+
+# calculating the average of measurements
+  for each tree on each day
+licor_avg_2 <- licor_avg_1%>%
+  group_by(Y, date, tree.id, batch, treatment)%>%
+  dplyr::summarise(avg.E_2=mean(avg.E_1), avg.A_2=mean(avg.A_1),
+  avg.Ca_2=mean(avg.Ca_1), avg.Ci_2=mean(avg.Ci_1), avg.gsw_2=mean(avg.gsw_1),
+  avg.A.Ci_2=mean(avg.A.Ci_1), avg.VPcham_2=mean(avg.VPcham_1),
+  avg.VPDleaf_2=mean(avg.VPDleaf_1), avg.Q_2=mean(avg.Q_1))%>%
+  as.data.frame()
+
+# removing batch 3
+licor_avg_2 <- subset(licor_avg_2, licor_avg_2$batch != "3")
+
+# converting batch from numeric to factor
+licor_avg_2$batch <- factor(licor_avg_2$batch)
+
+# GAS EXCHANGE VARIABLES ~ BATCH + TREATMENT
+library(rcompanion)
+
+# Scheirer–Ray–Hare test (nonparametric test used for two-way
+factorial design) - all significant
+
+SRH_A <- scheirerRayHare(avg.A_2 ~ batch + treatment, data=licor_avg_2)
+
+SHR_E <- scheirerRayHare(avg.E_2 ~ batch + treatment, data=licor_avg_2)
+
+SHR_gsw <- scheirerRayHare(avg.gsw_2 ~ batch + treatment, data=licor_avg_2)
+
+SHR_A.Ci <- scheirerRayHare(avg.A.Ci_2 ~ batch + treatment, data=licor_avg_2)
+
+# checking whether individual batches are significant
+# by creating subsets for each batch
+licor_avg_b1 <- subset(licor_avg_2, licor_avg_2$batch == "1")
+licor_avg_b2 <- subset(licor_avg_2, licor_avg_2$batch == "2")
+licor_avg_b4 <- subset(licor_avg_2, licor_avg_2$batch == "4")
+
+# Kruskal-Wallis test:
+# batches are not individually significant for A/Ci
+kr_1 <- kruskal.test(licor_avg_b1$avg.A.Ci_2 ~ licor_avg_b1$treatment) 
+# p-value=0.1 
+
+kr_2 <- kruskal.test(licor_avg_b2$avg.A.Ci_2 ~ licor_avg_b2$treatment) 
+# p-value=0.37
+
+kr_4 <- kruskal.test(licor_avg_b4$avg.A.Ci_2 ~ licor_avg_b4$treatment) 
+# p-value=0.01
+
+# SOIL TEMPERATURE
+# importing soil temperature data
+temp <- read.table("data/CR1000X_Yann_XinCooling.dat", header=TRUE, sep=",", 
+skip=3, na.strings = "NAN")
+
+# removing the days before and after gas exchange measurements
+temp_2 <- temp[-c(1:40418, 273468:306236), ]
+
+# changing column names and date format
+colnames(temp_2) <- c('Date', 'N', 'Min', 'Smp', 'cool1', 'cool2', 'cool3', 
+'contr1', 'contr2')
+library(stringr)
+temp_2[c('date', 'time')] <- str_split_fixed(temp_2$Date, ' ', 2)
+temp_2$date <- as.Date(temp_2$date, format = "%Y-%m-%d")
+temp_2$date <- format(temp_2$date, "%d/%m/%Y")
+
+# calculating the average for temperature values (each day)
+temp_3 <- temp_2%>%
+  group_by(date)%>%
+  dplyr::summarise(Smp=mean(Smp), cool1=mean(cool1), cool2=mean(cool2),
+  cool3=mean(cool3), contr1=mean(contr1),  contr2=mean(contr2))%>%
+  as.data.frame()
+
+# ordering by date
+temp_3 <- temp_3[order(as.Date(temp_3$date, format="%d/%m/%Y")), ]
+
+# on 13/7 we measured 2 batches (batch 1 in the morning and 2 in the afternoon): 
+# we need 2 values of mean 
+mean(temp[115163:118066,5])
+mean(temp[115163:118066,6])
+mean(temp[115163:118066,7])
+mean(temp[115163:118066,8])
+mean(temp[115163:118066,9])
+
+mean(temp[118067:120922,5])
+mean(temp[118067:120922,6])
+mean(temp[118067:120922,7])
+mean(temp[118067:120922,8])
+mean(temp[118067:120922,9])
+
+# keeping only the days during which we measured gas exchange
+temp_4 <- temp_3[temp_3$date %in% c('30/06/2023', '03/07/2023', '04/07/2023', 
+'10/07/2023', '13/07/2023', '19/07/2023',  '21/07/2023', '25/07/2023',
+'28/07/2023', '01/08/2023',  '04/08/2023', '07/08/2023', '09/08/2023', 
+'10/08/2023'), ]
+
+# creating a new column for soil temperature, 
+# with mean values for each day and each tree
+licor_avg_2$soil_temperature <- c(5.165599, 5.244229, 6.994229, 2.634512, 
+3.064366, 17.08293, 16.39777, 3.684478, 2.368306, 3.565989, 3.070011, 1.980472, 
+3.364987, 16.68514, 15.79022, 5.792202, 21.93107, 4.238358, 23.07499, 3.383498,
+3.13424, 4.337276, 5.644117, 5.697607, 3.102319, 6.945484, 24.66709, 25.19100,
+24.82654, 24.27996, 3.331607, 2.011076, 3.165969, 25.47543, 26.42160, 4.064173, 
+2.589215, 4.854806, 8.183644, 5.437522, 33.75890, 33.67237, 7.398282, 8.350280, 
+5.978569, 7.078955, 5.985372, 6.020313, 24.60876, 24.56076)
+
+# GAS EXCHANGE VS SOIL TEMPERATURE
+
+# gamma distribution for A
+gammaA <- glm(formula = licor_avg_2$avg.A_2 ~licor_avg_2$batch +
+licor_avg_2$soil_temperature, family = Gamma(), data = licor_avg_2) # 2.81e-05 ***
+
+# model validation for gamma distribution
+EP <- resid(gammaA, type = "pearson")
+ED <- resid(gammaA, type = "deviance")
+mu <- predict(gammaA, type = "response")
+E <- licor_avg_2$avg.A_2 - mu
+EP2 <- E / sqrt(0.2150349 * mu)
+op <- par(mfrow = c(2, 2))
+plot(x = mu, y = E, main = "Response residuals")
+plot(x = mu, y = EP, main = "Pearson residuals")
+plot(x = mu, y = EP2, main = "Pearson residuals scaled")
+plot(x = mu, y = ED, main = "Deviance residuals")
+par(op) # no pattern
+dev.off()
+
+# individual batches
+gammaA_b1 <- glm(avg.A_2[licor_avg_2$batch == "1"] ~ 
+licor_avg_2$soil_temperature[licor_avg_2$batch == "1"], 
+data=licor_avg_2, family=Gamma()) # 0.01
+
+gammaA_b2 <- glm(avg.A_2[licor_avg_2$batch == "2"] ~ 
+licor_avg_2$soil_temperature[licor_avg_2$batch == "2"],
+data=licor_avg_2, family=Gamma()) # 0.01
+
+gammaA_b4 <- glm(avg.A_2[licor_avg_2$batch == "4"] ~ 
+licor_avg_2$soil_temperature[licor_avg_2$batch == "4"],
+data=licor_avg_2, family=Gamma()) # 0.009
+
+# generalized additive model (GAM) for E 
+install.packages("mgcv")
+library(mgcv)
+gamE <- gam(licor_avg_2$avg.E_2 ~ licor_avg_2$batch + 
+s(licor_avg_2$soil_temperature, by=licor_avg_2$batch))
+# 7.65e-06 ***; 3.46e-05 ***; 0.0029 **
+
+# model validation for GAM
+install.packages("mgcViz")
+library(mgcViz)
+gamE <- getViz(gamE)
+check(gamE) # pattern in 3rd plot; 4th should be a straight line
+
+# GAM for gsw 
+gamgsw <- gam(licor_avg_2$avg.gsw_2 ~ licor_avg_2$batch +
+s(licor_avg_2$soil_temperature, by=licor_avg_2$batch))
+# 3.51e-07 ***; 3.76e-06 ***; 0.000799 ***
+gamgsw <- getViz(gamgsw)
+check(gamgsw)
+
+# gamma distribution for A/Ci 
+gammaA.Ci <- glm(formula = licor_avg_2$avg.A.Ci_2 ~
+licor_avg_2$batch + licor_avg_2$soil_temperature, family = Gamma(),
+data = licor_avg_2) #0.03847 *
+EP <- resid(gammaA.Ci, type = "pearson")
+ED <- resid(gammaA.Ci, type = "deviance")
+mu <- predict(gammaA.Ci, type = "response")
+E_A.Ci <- licor_avg_2$avg.A.Ci_2 - mu
+EP2 <- E_A.Ci / sqrt(0.1589045 * mu)
+op <- par(mfrow = c(2, 2))
+plot(x = mu, y = E_A.Ci, main = "Response residuals")
+plot(x = mu, y = EP, main = "Pearson residuals")
+plot(x = mu, y = EP2, main = "Pearson residuals scaled")
+plot(x = mu, y = ED, main = "Deviance residuals")
+par(op) 
+
+# individual batches
+gammaA.Ci_b1 <- glm(avg.A.Ci_2[licor_avg_2$batch == "1"] ~
+licor_avg_2$soil_temperature[licor_avg_2$batch == "1"],
+data=licor_avg_2, family=Gamma()) # 0.19
+
+gammaA.Ci_b2 <- glm(avg.A.Ci_2[licor_avg_2$batch == "2"] ~
+licor_avg_2$soil_temperature[batch == "2"],
+data=licor_avg_2, family=Gamma()) # 0.42
+
+gammaA.Ci_b4 <- glm(avg.A.Ci_2[licor_avg_2$batch == "4"] ~
+licor_avg_2$soil_temperature[batch == "4"],
+data=licor_avg_2, family=Gamma()) # 0.06
+
+### WATER POTENTIAL
+# importing water potential data 
+w_pot <- read.csv("data/leafpsi_2023.csv", sep = ";", header = TRUE, dec =",")
+
+# keeping only the days when we also measured water potential
+licor_avg_3 <- licor_avg_2[licor_avg_2$date %in% c('04/07/2023','10/07/2023', 
+'19/07/2023', '21/07/2023', '25/07/2023', '10/08/2023'), ] 
+w_pot_2 <- w_pot[-c(11:15, 29, 31:40), ] 
+w_pot_2 <- w_pot_2[order(w_pot_2$TreeID), ]
+licor_avg_3 <- licor_avg_3[order(licor_avg_3$tree.id), ]
+
+#adding column for water potential to licor data
+licor_avg_3$water_potential <- w_pot_2$psi_avg
+licor_avg_3$water_potential <- licor_avg_3$water_potential *(-1)
+
+### WATER POTENTIAL vs SOIL TEMPERATURE: gamma distribution
+gamma_wpot <- glm(licor_avg_3$soil_temperature ~ licor_avg_3$water_potential,
+data=licor_avg_3, family=Gamma()) # 0.4462
+EP <- resid(gamma_wpot, type = "pearson")
+ED <- resid(gamma_wpot, type = "deviance")
+mu <- predict(gamma_wpot, type = "response")
+E_ <- licor_avg_3$soil_temperature - mu
+EP2 <- E_ / sqrt(0.7352598 * mu)  
+op <- par(mfrow = c(2, 2))
+plot(x = mu, y = E_, main = "Response residuals")
+plot(x = mu, y = EP, main = "Pearson residuals")
+plot(x = mu, y = EP2, main = "Pearson residuals scaled")
+plot(x = mu, y = ED, main = "Deviance residuals")
+par(op)
+
+# GAS EXCHANGE VS WATER POTENTIAL
+
+# gamma distribution for A
+gammaA2 <- glm(licor_avg_3$avg.A_2 ~ licor_avg_3$batch +
+licor_avg_3$water_potential, data=licor_avg_3, family=Gamma())
+summary(gammaA2) # 0.004673 **
+EP <- resid(gammaA2, type = "pearson")
+ED <- resid(gammaA2, type = "deviance")
+mu <- predict(gammaA2, type = "response")
+E_ <- licor_avg_3$avg.A_2 - mu
+EP2 <- E_ / sqrt(0.2461634 * mu)  
+op <- par(mfrow = c(2, 2))
+plot(x = mu, y = E_, main = "Response residuals")
+plot(x = mu, y = EP, main = "Pearson residuals")
+plot(x = mu, y = EP2, main = "Pearson residuals scaled")
+plot(x = mu, y = ED, main = "Deviance residuals")
+par(op)
+
+#individual batches
+gammaA2_1 <- glm(licor_avg_3$avg.A_2[licor_avg_3$batch == "1"] ~
+licor_avg_3$water_potential[licor_avg_3$batch == "1"], data=licor_avg_3, 
+family=Gamma()) # 0.0727 . 
+
+gammaA2_2 <- glm(licor_avg_3$avg.A_2[licor_avg_3$batch == "2"] ~
+licor_avg_3$water_potential[licor_avg_3$batch == "2"], data=licor_avg_3, 
+family=Gamma()) # 0.22
+
+gammaA2_3 <- glm(licor_avg_3$avg.A_2[licor_avg_3$batch == "4"] ~
+licor_avg_3$water_potential[licor_avg_3$batch == "4"], data=licor_avg_3, 
+family=Gamma()) # 0.17
+
+# E - significant 
+gamEw <- gam(licor_avg_3$avg.E_2 ~ licor_avg_3$batch +
+s(licor_avg_3$water_potential, by=licor_avg_3$batch))
+# 0.0107 * 0.0611 . 0.2192
+gamEw <- getViz(gamEw)
+check(gamEw) 
+
+# gsw - significant
+gamgsww <- gam(licor_avg_3$avg.gsw_2 ~ licor_avg_3$batch +
+s(licor_avg_3$water_potential, by=licor_avg_3$batch))
+#0.00632 ** 0.09968 . 0.26244
+gamgsww <- getViz(gamgsww)
+check(gamgsww) 
+
+# gamma distribution for A/Ci 
+gammaA.Ci2 <- glm(licor_avg_3$avg.A.Ci_2 ~ licor_avg_3$batch +
+licor_avg_3$water_potential, data=licor_avg_3, 
+family=Gamma()) # 0.25387  
+EP <- resid(gammaA.Ci2, type = "pearson")
+ED <- resid(gammaA.Ci2, type = "deviance")
+mu <- predict(gammaA.Ci2, type = "response")
+E_ <- licor_avg_3$avg.A.Ci_2 - mu
+EP2 <- E_ / sqrt(0.124749 * mu)  
+op <- par(mfrow = c(2, 2))
+plot(x = mu, y = E_, main = "Response residuals")
+plot(x = mu, y = EP, main = "Pearson residuals")
+plot(x = mu, y = EP2, main = "Pearson residuals scaled")
+plot(x = mu, y = ED, main = "Deviance residuals") # relabel
+par(op)
+
+gammaA.Ci2_1 <- glm(licor_avg_3$avg.A.Ci_2[licor_avg_3$batch == "1"] ~
+licor_avg_3$water_potential[licor_avg_3$batch == "1"], data=licor_avg_3,
+family=Gamma()) # 0.462
+
+gammaA.Ci2_2 <- glm(licor_avg_3$avg.A.Ci_2[licor_avg_3$batch == "2"] ~
+licor_avg_3$water_potential[licor_avg_3$batch == "2"], data=licor_avg_3,
+family=Gamma()) # 0.8067  
+
+gammaA.Ci2_3 <- glm(licor_avg_3$avg.A.Ci_2[licor_avg_3$batch == "4"] ~
+licor_avg_3$water_potential[licor_avg_3$batch == "4"], data=licor_avg_3,
+family=Gamma()) # 0.32
+\end{verbatim}
+
+\cleardoublepage
+
+\begin{thebibliography}{9}
+
+\bibitem[Antal et al.(2013)]{Antal_et_al._2013}
+Antal, T. K., Kovalenko, I. B., Rubin, A. B., \& Tyystjärvi, E. (2013). Photosynthesis-related quantities for education and modeling. Photosynthesis research, 117(1-3), 1–30.
+
+\bibitem[Arnon(1971)]{Arnon_D._I._1971}
+Arnon D. I. (1971). The light reactions of photosynthesis. Proceedings of the National Academy of Sciences of the United States of America, 68(11), 2883–2892.
+
+\bibitem[Balasubramanian et al.(2023)]{Balasubramanian_et_al._2023}
+Balasubramanian, V. K., Rivas-Ubach, A., Winkler, T., Mitchell, H., Moran, J., \& Ahkami, A. H. (2023). Modulation of Polar Auxin Transport Identifies the Molecular Determinants of Source-Sink Carbon Relationships and Sink Strength in Poplar. Tree physiology, tpad073. 
+
+\bibitem[BassiriRad et al.(1993)]{BassiriRad_et_al._1993}
+BassiriRad H., Caldwell M. M., Mott K. A. (1993). Effect of root cooling on photosynthesis of \textit{Artemisia tridentata} seedlings under different light levels. Bot Acta. 106:223–227.
+
+\bibitem[Biel \& Fomina(2015)]{Biel_K._and_Fomina_I._2015}
+Biel, K., Fomina, I. (2015). Benson-Bassham-Calvin cycle contribution to the organic life on our planet. Photosynthetica 53, 161–167
+
+\bibitem[Brown(2013)]{Brown_2013}
+Brown, H.R. (2013). The Theory of the Rise of Sap in Trees: Some Historical and Conceptual Remarks. Phys. Perspect. 15, 320–358.
+
+\bibitem[Cai \& Dang(2002)]{Cai_and_Dang_2002}
+Cai T., Dang Q.L. (2002). Effects of soil temperature on parameters of a coupled photosynthesis–stomatal conductance model. Tree Physiol 22:819–827.
+
+\bibitem[Chiou \& Bush(1998)]{Chiou_and_Bush_1998}
+Chiou, T. J., \& Bush, D. R. (1998). Sucrose is a signal molecule in assimilate partitioning. Proceedings of the National Academy of Sciences of the United States of America, 95(8), 4784–4788.
+
+\bibitem[Day et al.(1991)]{Day_et_al._1991}
+Day, T. A., Heckathorn, S. A., \& Delucia, E. H. (1991). Limitations of Photosynthesis in Pinus taeda L. (Loblolly Pine) at Low Soil Temperatures. Plant physiology, 96(4), 1246–1254.
+
+\bibitem[Diah et al.(2014)]{Diah_S._Z._M._et_al._2014}
+Diah S. Z. M., Karman S. B., Gebeshuber I. C. (2014). Nanostructural Colouration in Malaysian Plants: Lessons for Biomimetics and Biomaterials. Journal of Nanomaterials 2014, 1–15. 
+
+\bibitem[Drake at al.(2017)]{Drake_et_al._2017}
+Drake, J. E., Power, S. A., Duursma, R. A., Medlyn, B. E.,  Aspinwall, M. J., Choat, B., Creek, D.,  Eamus, D.,  Maier, C., Pfautsch, S.,  Smith, R. A.,  Tjoelker, M. G.,  Tissue, D. T. (2017). Stomatal and non-stomatal limitations of photosynthesis for four tree species under drought: A comparison of model formulations. Agricultural and Forest Meteorology, Volume 247, Pages 454-466.
+
+\bibitem[Duan et al.(2008)]{Duan_et_al._2008}
+Duan, W., Fan, P. G., Wang, L. J., Li, W. D., Yan, S. T., \& Li, S. H. (2008). Photosynthetic response to low sink demand after fruit removal in relation to photoinhibition and photoprotection in peach trees. Tree physiology, 28(1), 123–132.
+
+\bibitem[Epron et al.(2019)]{Epron_D._et_al._2019}
+Epron, D., Dannoura, M., Plain, C. (2019). Using 13C to Quantify Phloem Transport on Tall Plants in the Field. Methods Mol Biol. 2014:145-151. \url{https://doi.org/10.1007/978-1-4939-9562-2_12}. PMID: 31197793.
+
+\bibitem[Franck et al.(2006)]{Franck_et_al._2006}
+Franck, N., Vaast, P., Génard, M., \& Dauzat, J. (2006). Soluble sugars mediate sink feedback down-regulation of leaf photosynthesis in field-grown Coffea arabica. Tree physiology, 26(4), 517–525.
+
+\bibitem[Gambetta et al.(2017)]{Gambetta_G.A._et_al._2017}
+Gambetta, G.A., Knipfer, T., Fricke, W., McElrone, A.J. (2017). Aquaporins and Root Water Uptake. In: Chaumont, F., Tyerman, S. (eds) Plant Aquaporins. Signaling and Communication in Plants. Springer, Cham. 
+
+\bibitem[GBIF Secretariat(2024)]{GBIF_Secretariat_2024}
+GBIF Secretariat: GBIF Backbone Taxonomy. \url{https://doi.org/10.15468/39omei} Accessed via \url{https://www.gbif.org/species/5284517} [16 April 2024]
+
+\bibitem[Hellman et al.(2018)]{Hellman_et_al._2018}
+Hellmann, E., Ko, D., Ruonala, R., \& Helariutta, Y. (2018). Plant Vascular Tissues-Connecting Tissue Comes in All Shapes. Plants (Basel, Switzerland), 7(4), 109.
+
+\bibitem[Hill \& Bendall(1960)]{Hill_R._and_Bendall_F._1960}
+Hill, R. \& Bendall, F. (1960). Function of the Two Cytochrome Components in Chloroplasts: A Working Hypothesis. Nature 186, 136–137.
+
+\bibitem[Hölttä et al.(2017)]{Hölttä_et_al._2017}
+Hölttä, T., Lintunen, A., Chan, T., Mäkelä, A., \& Nikinmaa, E. (2017). A steady-state stomatal model of balanced leaf gas exchange, hydraulics and maximal source-sink flux. Tree physiology, 37(7), 851–868.
+
+\bibitem[Hunt(1964)]{Hunt_1964}
+Hunt, L. B. (1964). The Early History of the Thermocouple. Platinum Metals Review, 8, 23-28(6). 
+
+\bibitem[Jarvis \& Davies(1998)]{Jarvis_and_Davies_1998}
+Jarvis, A. J., \& Davies, W. J. (1998). The coupled response of stomatal conductance to photosynthesis and transpiration. Journal of Experimental Botany, 49, 399–406.
+
+\bibitem[Johnson(2016)]{Johnson_M._P._2016}
+Johnson M. P. (2016). Photosynthesis. Essays in biochemistry, 60(3), 255–273.
+
+\bibitem[Knoblauch \& Peters(2017)]{Knoblauch_and_Peters_2017}
+Knoblauch, M., \& Peters, W. S. (2017). What actually is the Münch hypothesis? A short history of assimilate transport by mass flow. Journal of integrative plant biology, 59(5), 292–310.
+
+\bibitem[Knoblauch et al.(2016)]{Knoblauch_et_al._2016}
+Knoblauch, M., Knoblauch, J., Mullendore, D. L., Savage, J. A., Babst, B. A., Beecher, S. D., Dodgen, A. C., Jensen, K. H., \& Holbrook, N. M. (2016). Testing the Münch hypothesis of long distance phloem transport in plants. eLife, 5, e15341.
+
+\bibitem[Lambers(2008)]{Lambers_2008}
+Lambers, H., Chapin F.S., Pons T.L. (2008). Plant Physiological
+Ecology. 2nd edition, Springer Science+Business Media, LLC, pp. 136, 346. 
+
+\bibitem[Lauda(1989)]{Lauda_1989}
+Lauda Dr. R. Wobser GMBH and CO. KG (1989), Lauda transparent thermostats CSD 15, CSD 20, CSD 30 to DIN 12879. 03/89 from series H01 YACE0025. pp. 7-8.
+
+\bibitem[LI-COR, Inc.(2020)]{LI-COR_Inc._2020}
+LI-COR, Inc. (2020). Using the LI-6800 Portable Photosynthesis System. Version 1.4, pp. 1-2, 1-3, 1-16, Apprendix C-1-11. 
+
+\bibitem[Lintunen et al.(2020)]{Lintunen_et_al._2020}
+Lintunen, A., Paljakka, T., Salmon, Y., Dewar, R., Riikonen, A., \& Hölttä, T. (2020). The influence of soil temperature and water content on belowground hydraulic conductance and leaf gas exchange in mature trees of three boreal species. Plant, cell \& environment, 43(3), 532–547.
+
+\bibitem[Mangiafico(2016)]{Mangiafico_2016}
+Mangiafico, S.S. (2016). Summary and Analysis of Extension Program Evaluation in R, version 1.20.07, revised 2024.
+
+\bibitem[Mangiafico(2024)]{Mangiafico_2024}
+Mangiafico, S.S. (2024). rcompanion: Functions to Support Extension Education Program Evaluation. version 2.4.35. Rutgers Cooperative Extension. New Brunswick, New Jersey. \url{https://CRAN.R-project.org/package=rcompanion}
+
+\bibitem[Mauseth(2006)]{Mauseth_2006}
+Mauseth, J. (2006). Botanica. 2nd edition, Idelson-Gnocchi, pp. 206-215.  
+
+\bibitem[Morandi et al.(2010)]{Morandi_et_al._2010}
+Morandi, B., Manfrini, L., Losciale, P., Zibordi, M., \& Grappadelli, L. C. (2010). Changes in vascular and transpiration flows affect the seasonal and daily growth of kiwifruit (actinidia deliciosa) berry. Annals of Botany, 105(6), 913-923.
+
+\bibitem[Oksanen(2003)]{Oksanen_2003}
+Oksanen, E. (2003). Physiological responses of birch (\textit{Betula pendula}) to ozone: a comparison between open-soil-grown trees exposed for six growing seasons and potted seedlings exposed for one season. Tree Physiology, 23(9), 603–614.
+
+\bibitem[PMS Instrument Company(2009)]{PMS_Instrument_Company_2009}
+PMS Instrument Company (2009). Model 1505D Pressure Chamber Instrument. Operating Instructions.
+
+
+\bibitem[Queiroz et al.(2017)]{Queiroz_et_al._2017}
+Queiroz, M. I., Fernandes, A. S., Deprá, M. C., Jacob-Lopes, E., \& Zepka, L. Q. (2017). Introductory Chapter: Chlorophyll Molecules and Their Technological Relevance. InTech. 
+
+\bibitem[Rascio et al.(2017)]{Rascio_2017}
+Rascio, N., Carfagna, S., Esposito, S., La Rocca, N., Lo Gullo M. A., Trost P., Vona, V. (2017). Elementi di fisiologia vegetale. 2nd edition, EdiSES s.r.l., pp. 3-4, 30-34, 98-101, 171-177, 195-199, 204.
+
+\bibitem[Rolland et al.(2002)]{Rolland_et_al._2002}
+Rolland, F., Moore, B., \& Sheen, J. (2002). Sugar sensing and signaling in plants. The Plant cell, 14 Suppl(Suppl), S185–S205.
+
+\bibitem[R Core Team(2023)]{R_Core_Team_2023}
+R Core Team (2023). \_R: A Language and Environment for Statistical Computing\_. R Foundation for Statistical Computing, Vienna, Austria. Version 4.3.2.
+
+\bibitem[Salmon et al.(2020)]{Salmon_et_al._2020}
+Salmon, Y., Lintunen, A., Dayet, A., Chan, T., Dewar, R., Vesala, T., \& Hölttä, T. (2020). Leaf carbon and water status control stomatal and nonstomatal limitations of photosynthesis in trees. The New phytologist, 226(3), 690–703.
+
+\bibitem[Signarbieux et al.(2011)]{Signarbieux_et_al._2011}
+Signarbieux, C. \& Feller, U. (2011). Non-stomatal limitations of photosynthesis in grassland species under artificial drought in the field, Environmental and Experimental Botany, 71(2), 192-197.
+
+\bibitem[Sun et al.(2003)]{Sun_et_al._2003}
+Sun, N., Ma, L., Pan, D., Zhao, H., \& Deng, X. W. (2003). Evaluation of light regulatory potential of Calvin cycle steps based on large-scale gene expression profiling data. Plant molecular biology, 53(4), 467–478.
+
+\bibitem[Taiz \& Zeiger(2002)]{Taiz_and_Zeiger_2002}
+Taiz L. \& Zeiger E. (2002). Plant physiology. 3rd edition, Sinauer Associates, pp. 16, 39-41, 57, 59-62, 193-201, 214, 217-219. 
+
+\bibitem[Thorne \& Koller(1974)]{Thorne_and_Koller_1974}
+Thorne, J. H., \& Koller, H. R. (1974). Influence of assimilate demand on photosynthesis, diffusive resistances, translocation, and carbohydrate levels of soybean leaves. Plant physiology, 54(2), 201–207.
+
+\bibitem[Vakkari(2009)]{Vakkari_2009}
+Vakkari, P. (2009). EUFORGEN Technical Guidelines for genetic conservation and use of silver birch (\textit{Betula pendula}). Bioversity International, Rome, Italy.
+
+\bibitem[Venturas et al.(2017)]{Venturas_M._D._et_al._2017}
+Venturas, M. D., Sperry, J. S., \& Hacke, U. G. (2017). Plant xylem hydraulics: What we understand, current research, and future challenges. Journal of integrative plant biology, 59(6), 356–389.
+
+\bibitem[Wickham(2016)]{Wickham_2016}
+Wickham, H. (2016). ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York. 
+
+\bibitem[Will et al.(2013)]{Will_et_al._2013}
+Will, T., Furch, A. C., \& Zimmermann, M. R. (2013). How phloem-feeding insects face the challenge of phloem-located defenses. Frontiers in plant science, 4, 336.
+
+\bibitem[Wood(2017)]{Wood_2017}
+Wood, S.N. (2017). Generalized Additive Models: An Introduction with R (2nd edition). Chapman and Hall/CRC.
+
+\bibitem[Wünsche et al.(2005)]{Wünsche_et_al._2005}
+Wünsche, J. N., Greer, D. H., Laing, W. A., \& Palmer, J. W. (2005). Physiological and biochemical leaf and tree responses to crop load in apple. Tree physiology, 25(10), 1253–1263.
+
+\bibitem[Zuur et al.(2009)]{Zuur_2009}
+Zuur, A. F., Ieno, E. N., Walker, N. J., Saveliev, A. A., Smith, G. M. (2009). Mixed Effects Models and Extensions in Ecology with R, Statistics for Biology and Health. Springer Science+Business Media, LLC, pp. 19, 26, 201, 227-233. 
+
+\end{thebibliography}
+
+
+\end{document}
